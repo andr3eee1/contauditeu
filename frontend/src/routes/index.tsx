@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 import {
   FileSpreadsheet,
@@ -9,7 +10,9 @@ import {
   ArrowRight,
   Check,
   Quote,
-  Star
+  Star,
+  Menu,
+  X
 } from 'lucide-react'
 
 export const Route = createFileRoute('/')({
@@ -56,13 +59,14 @@ export const Route = createFileRoute('/')({
 
 function Home() {
   const currentYear = new Date().getFullYear();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans selection:bg-gold/20">
       {/* Header Sticky */}
-      <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-background/80 border-b border-border/70 shadow-sm">
+      <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-background/90 border-b border-border/70 shadow-sm">
         <div className="max-w-6xl mx-auto px-5 h-20 flex items-center justify-between">
-          <a href="#" className="flex items-baseline gap-0.5 group">
+          <a href="#" className="flex items-baseline gap-0.5 group z-50" onClick={() => setMobileMenuOpen(false)}>
             <span className="font-display text-2xl tracking-tight text-navy group-hover:text-gold transition-colors">contaudit</span>
             <span className="text-xs font-semibold text-muted-foreground">.eu</span>
           </a>
@@ -78,12 +82,32 @@ function Home() {
             Programează o discuție
           </a>
           
-          {/* Mobile menu button could go here, but omitted for brevity in a single file unless necessary */}
+          <button 
+            className="md:hidden flex items-center justify-center p-2 -mr-2 text-foreground z-50"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
+        
+        {mobileMenuOpen && (
+          <div className="md:hidden fixed inset-0 top-20 bg-background/95 backdrop-blur-sm z-40 flex flex-col p-5 border-t border-border/50 animate-in fade-in slide-in-from-top-4 duration-200">
+            <nav className="flex flex-col gap-6 text-lg font-medium pt-4">
+              <a href="#servicii" onClick={() => setMobileMenuOpen(false)} className="text-foreground/80 hover:text-gold transition-colors border-b border-border/40 pb-4">Servicii</a>
+              <a href="#despre" onClick={() => setMobileMenuOpen(false)} className="text-foreground/80 hover:text-gold transition-colors border-b border-border/40 pb-4">Despre noi</a>
+              <a href="#proces" onClick={() => setMobileMenuOpen(false)} className="text-foreground/80 hover:text-gold transition-colors border-b border-border/40 pb-4">Proces</a>
+              <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="text-foreground/80 hover:text-gold transition-colors pb-4">Contact</a>
+            </nav>
+            <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="mt-8 inline-flex items-center justify-center rounded-sm bg-navy px-5 py-4 text-base font-medium text-navy-foreground hover:bg-navy/90 transition-colors w-full">
+              Programează o discuție
+            </a>
+          </div>
+        )}
       </header>
 
       {/* Hero */}
-      <section className="relative bg-navy text-navy-foreground overflow-hidden pt-24 pb-32">
+      <section className="relative bg-navy text-navy-foreground overflow-hidden pt-16 md:pt-24 pb-20 md:pb-32">
         <div className="absolute inset-0 opacity-25">
           <img src="/hero-office.jpg" alt="Firmă de contabilitate și audit financiar - Birou profesional" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-navy/60 mix-blend-multiply"></div>
@@ -111,7 +135,7 @@ function Home() {
               </a>
             </div>
 
-            <div className="grid grid-cols-3 gap-8 pt-8 border-t border-navy-foreground/20">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 md:gap-8 pt-8 border-t border-navy-foreground/20">
               <div>
                 <p className="font-display text-3xl text-gold mb-1">18+</p>
                 <p className="text-xs uppercase tracking-wider text-navy-foreground/70">ani de experiență</p>
