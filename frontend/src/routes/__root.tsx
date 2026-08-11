@@ -27,7 +27,7 @@ export const Route = createRootRoute({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ro">
+    <html lang="ro" className="scroll-smooth scroll-pt-20">
       <head>
         <HeadContent />
       </head>
