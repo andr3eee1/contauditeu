@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import {
   FileSpreadsheet,
   ClipboardCheck,
@@ -41,6 +41,11 @@ export const Route = createFileRoute('/')({
             "@type": "PostalAddress",
             "addressLocality": "București",
             "addressCountry": "RO"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 40.761293,
+            "longitude": -73.982294
           },
           "telephone": "+40312345678",
           "email": "contact@contaudit.eu",
@@ -471,9 +476,13 @@ function Home() {
             <span className="font-display text-xl tracking-tight text-navy">contaudit</span>
             <span className="text-xs font-semibold text-muted-foreground">.eu</span>
           </div>
-          <p className="text-sm text-muted-foreground">
-            &copy; {currentYear} Contaudit. Toate drepturile rezervate.
-          </p>
+          <div className="flex flex-col md:flex-row items-center gap-4 text-sm text-muted-foreground">
+            <Link to="/confidentialitate" className="hover:text-foreground transition-colors">
+              Politică de Confidențialitate
+            </Link>
+            <span className="hidden md:inline text-border">•</span>
+            <p>&copy; {currentYear} Contaudit. Toate drepturile rezervate.</p>
+          </div>
         </div>
       </footer>
     </div>
