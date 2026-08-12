@@ -83,7 +83,7 @@ function Dashboard() {
           </div>
           <button 
             onClick={handleLogout}
-            className="w-full flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-destructive hover:bg-destructive/10 rounded-lg transition-colors"
+            className="w-full flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-destructive hover:bg-destructive/10 rounded-lg transition-colors cursor-pointer"
           >
             <LogOut size={16} />
             Deconectare
@@ -99,7 +99,7 @@ function Dashboard() {
             <span className="font-display text-xl tracking-tight text-navy group-hover:text-gold transition-colors">contaudit</span>
             <span className="text-xs font-semibold text-muted-foreground">.eu</span>
           </Link>
-          <button onClick={handleLogout} className="text-muted-foreground hover:text-destructive">
+          <button onClick={handleLogout} className="text-muted-foreground hover:text-destructive cursor-pointer">
             <LogOut size={20} />
           </button>
         </header>
