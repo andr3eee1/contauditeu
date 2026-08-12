@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
 
 import appCss from '../styles.css?url'
@@ -26,8 +27,16 @@ export const Route = createRootRoute({
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  useEffect(() => {
+    // Add smooth scrolling after a tiny delay so it doesn't animate on page refresh
+    const timeout = setTimeout(() => {
+      document.documentElement.classList.add('scroll-smooth');
+    }, 100);
+    return () => clearTimeout(timeout);
+  }, []);
+
   return (
-    <html lang="ro" className="scroll-smooth scroll-pt-20">
+    <html lang="ro" className="scroll-pt-20">
       <head>
         <HeadContent />
       </head>
