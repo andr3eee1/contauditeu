@@ -124,10 +124,10 @@ function Home() {
               Contabilitate · Audit · Fiscalitate
             </span>
             <h1 className="font-display text-5xl md:text-7xl mb-6 font-normal tracking-[-0.01em] leading-[1.1]">
-              Firmă de Contabilitate și Audit Financiar cu Experiență.
+              Lorem ipsum dolor sit amet consectetur adipiscing.
             </h1>
             <p className="text-lg md:text-xl text-navy-foreground/80 mb-10 max-w-2xl font-light">
-              Oferim antreprenorilor și companiilor din România servicii complete de contabilitate, audit, salarizare și consultanță fiscală. Cifre corecte pentru decizii sigure.
+              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 mb-16">
@@ -225,21 +225,21 @@ function Home() {
             <div>
               <span className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground block mb-4">Despre noi</span>
               <h2 className="font-display text-4xl md:text-5xl font-normal tracking-[-0.01em] text-foreground mb-8 gold-rule">
-                Expertiza unui profesionist dedicat.
+                Lorem ipsum dolor sit amet elit.
               </h2>
               <div className="space-y-6 text-foreground/80 leading-relaxed text-lg mb-8">
                 <p>
-                  Sunt <strong>Ioana Popescu</strong>, Managing Director și expert contabil cu peste 18 ani de experiență. Contaudit a luat naștere din dorința de a oferi antreprenorilor români rigoare profesională și o comunicare clară și directă.
+                  Sunt <strong>[Nume Placeholder]</strong>, lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
                 </p>
                 <p>
-                  Lucrez structurat, documentat și confidențial. Abordarea mea personalizată garantează că fiecare decizie financiară pe care o luați este fundamentată pe cifre corecte, livrate într-un format ușor de înțeles.
+                  Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
                 </p>
               </div>
               <ul className="space-y-4 mb-8">
                 {[
-                  "Membru al corpului profesional CECCAR și CAFR",
-                  "Expertiză în industrii diverse (IT, producție, comerț)",
-                  "Comunicare fluentă în română și engleză"
+                  "Lorem ipsum dolor sit amet consectetur",
+                  "Adipiscing elit sed do eiusmod tempor",
+                  "Incididunt ut labore et dolore magna"
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-4">
                     <div className="mt-1 bg-gold/20 text-gold rounded-full p-1 flex-shrink-0">
@@ -256,8 +256,8 @@ function Home() {
                 <img src="/founder.jpg" alt="Ioana Popescu, Expert Contabil și Auditor Financiar" className="w-full h-full object-cover" />
               </div>
               <div className="absolute -bottom-6 -left-6 bg-surface p-6 rounded-sm shadow-soft border border-border z-20">
-                <p className="font-display text-2xl text-foreground">Ioana Popescu</p>
-                <p className="text-sm text-muted-foreground uppercase tracking-wider font-semibold mt-1">Expert Contabil</p>
+                <p className="font-display text-2xl text-foreground">[Nume Placeholder]</p>
+                <p className="text-sm text-muted-foreground uppercase tracking-wider font-semibold mt-1">Lorem Ipsum</p>
               </div>
               {/* Decorative block */}
               <div className="absolute -top-6 -right-6 w-3/4 h-3/4 bg-primary/5 rounded-sm -z-10"></div>
@@ -329,15 +329,15 @@ function Home() {
                 {[...Array(5)].map((_, i) => <Star key={i} size={16} fill="currentColor" />)}
               </div>
               <p className="text-foreground/80 leading-relaxed mb-8 italic">
-                "Colaborarea cu Ioana a schimbat complet modul în care privim rapoartele financiare. Acum luăm decizii mult mai ușor, bazați pe date corecte și clare."
+                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam."
               </p>
               <div className="flex items-center gap-4 mt-auto">
                 <div className="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold">
-                  AM
+                  NL
                 </div>
                 <div>
-                  <p className="font-medium text-foreground">Andrei Munteanu</p>
-                  <p className="text-xs text-muted-foreground">CEO, TechStart SRL</p>
+                  <p className="font-medium text-foreground">Nume Lorem</p>
+                  <p className="text-xs text-muted-foreground">CEO, Ipsum SRL</p>
                 </div>
               </div>
             </div>
@@ -348,15 +348,15 @@ function Home() {
                 {[...Array(5)].map((_, i) => <Star key={i} size={16} fill="currentColor" />)}
               </div>
               <p className="text-foreground/80 leading-relaxed mb-8 italic">
-                "Atenția la detalii și promptitudinea sunt extraordinare. În plus, explicațiile sunt mereu pe înțelesul meu, evitând limbajul contabil complicat."
+                "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident."
               </p>
               <div className="flex items-center gap-4 mt-auto">
                 <div className="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold">
-                  ED
+                  IL
                 </div>
                 <div>
-                  <p className="font-medium text-foreground">Elena Dumitrescu</p>
-                  <p className="text-xs text-muted-foreground">Fondator, ArhiDesign</p>
+                  <p className="font-medium text-foreground">Ipsum Lorem</p>
+                  <p className="text-xs text-muted-foreground">Fondator, DolorSit</p>
                 </div>
               </div>
             </div>
@@ -367,15 +367,15 @@ function Home() {
                 {[...Array(5)].map((_, i) => <Star key={i} size={16} fill="currentColor" />)}
               </div>
               <p className="text-foreground/80 leading-relaxed mb-8 italic">
-                "Servicii de o calitate impecabilă. De când am început colaborarea, nu ne mai facem griji pentru controale sau modificări legislative."
+                "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore."
               </p>
               <div className="flex items-center gap-4 mt-auto">
                 <div className="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold">
-                  RP
+                  DL
                 </div>
                 <div>
-                  <p className="font-medium text-foreground">Radu Popa</p>
-                  <p className="text-xs text-muted-foreground">Director, Construcții Sud</p>
+                  <p className="font-medium text-foreground">Dolor Lorem</p>
+                  <p className="text-xs text-muted-foreground">Director, Amet Inc</p>
                 </div>
               </div>
             </div>
