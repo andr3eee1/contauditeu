@@ -65,6 +65,12 @@ npm install
 npm run dev
 ```
 
-## 📄 License
+## 📄 License & Copyright
 
-This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
+**Copyright (c) 2026 ContAudit.eu.**
+
+This project is licensed under the **GNU General Public License v3.0** (GPL-3.0) - see the [LICENSE](LICENSE) file for details.
+
+Under this license, you are free to use, modify, and distribute this software, provided that:
+1. **Attribution:** You must keep the original copyright notices intact and credit the original creator.
+2. **Copyleft (ShareAlike):** Any modifications or derivative works must also be open-sourced under the exact same GPLv3 license. You cannot use this code to build closed-source proprietary software.
