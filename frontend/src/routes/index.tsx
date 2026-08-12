@@ -514,12 +514,15 @@ function Home() {
             <span className="font-display text-xl tracking-tight text-navy">contaudit</span>
             <span className="text-xs font-semibold text-muted-foreground">.eu</span>
           </div>
-          <div className="flex flex-col md:flex-row items-center gap-4 text-sm text-muted-foreground">
+          <div className="flex flex-col md:flex-row items-center md:justify-end gap-6 w-full text-sm text-muted-foreground mt-4 md:mt-0">
+            <div className="flex flex-col items-center md:items-start gap-1">
+              <p>&copy; {currentYear} Contaudit. Toate drepturile rezervate.</p>
+              <p>Dezvoltat cu ❤️ de <a href="https://andrei.pana.com.ro" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors font-medium">Andrei</a></p>
+            </div>
+            <div className="hidden md:block w-px h-8 bg-border"></div>
             <Link to="/confidentialitate" className="hover:text-foreground transition-colors">
               Politică de Confidențialitate
             </Link>
-            <span className="hidden md:inline text-border">•</span>
-            <p>&copy; {currentYear} Contaudit. Toate drepturile rezervate.</p>
           </div>
         </div>
       </footer>
