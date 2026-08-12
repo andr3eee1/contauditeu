@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
+import { HeadContent, Scripts, createRootRoute, Link } from '@tanstack/react-router'
+import { FileQuestion, AlertTriangle, Home, ArrowLeft } from 'lucide-react'
 
 import appCss from '../styles.css?url'
 
@@ -23,8 +24,76 @@ export const Route = createRootRoute({
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
   }),
+  notFoundComponent: NotFoundComponent,
+  errorComponent: ErrorComponent,
   shellComponent: RootDocument,
 })
+
+function NotFoundComponent() {
+  return (
+    <RootDocument>
+      <div className="min-h-screen bg-surface flex items-center justify-center p-4">
+        {/* Decorative blobs */}
+        <div className="fixed top-0 left-0 w-full h-full overflow-hidden -z-10">
+          <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[40%] bg-gold/10 rounded-full blur-[120px]"></div>
+          <div className="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-navy/10 rounded-full blur-[120px]"></div>
+        </div>
+        
+        <div className="bg-background/80 backdrop-blur-xl p-10 rounded-3xl shadow-xl border border-border/50 text-center max-w-md w-full">
+          <div className="w-24 h-24 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mx-auto mb-6 transform -rotate-6">
+            <FileQuestion size={48} />
+          </div>
+          <h1 className="font-display text-7xl font-medium text-foreground mb-2">404</h1>
+          <h2 className="text-2xl font-medium text-foreground mb-4">Pagina nu a fost găsită</h2>
+          <p className="text-muted-foreground mb-8">
+            Ne pare rău, dar documentul sau pagina pe care o căutați nu există, a fost mutată sau nu aveți acces la ea.
+          </p>
+          <Link to="/" className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-navy px-6 py-3.5 text-sm font-medium text-navy-foreground hover:bg-navy/90 hover:shadow-[0_8px_20px_rgba(26,35,64,0.25)] transition-all hover:-translate-y-0.5">
+            <Home size={18} />
+            Înapoi acasă
+          </Link>
+        </div>
+      </div>
+    </RootDocument>
+  )
+}
+
+function ErrorComponent({ error }: { error: any }) {
+  return (
+    <RootDocument>
+      <div className="min-h-screen bg-surface flex items-center justify-center p-4">
+        {/* Decorative blobs */}
+        <div className="fixed top-0 left-0 w-full h-full overflow-hidden -z-10">
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-destructive/10 rounded-full blur-[120px]"></div>
+        </div>
+
+        <div className="bg-background/80 backdrop-blur-xl p-10 rounded-3xl shadow-xl border border-border/50 text-center max-w-md w-full">
+          <div className="w-24 h-24 bg-destructive/10 text-destructive rounded-2xl flex items-center justify-center mx-auto mb-6 transform -rotate-6">
+            <AlertTriangle size={48} />
+          </div>
+          <h1 className="font-display text-7xl font-medium text-foreground mb-2">Oops</h1>
+          <h2 className="text-2xl font-medium text-foreground mb-4">Eroare de sistem</h2>
+          <p className="text-muted-foreground mb-8 text-sm">
+            {error?.message || "Ne cerem scuze, dar a apărut o eroare neașteptată de server. Vă rugăm să încercați din nou."}
+          </p>
+          <div className="flex flex-col gap-3">
+            <button 
+              onClick={() => window.location.reload()} 
+              className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-navy px-6 py-3.5 text-sm font-medium text-navy-foreground hover:bg-navy/90 hover:shadow-[0_8px_20px_rgba(26,35,64,0.25)] transition-all hover:-translate-y-0.5 cursor-pointer"
+            >
+              <ArrowLeft size={18} />
+              Reîncărcați pagina
+            </button>
+            <Link to="/" className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-secondary px-6 py-3.5 text-sm font-medium text-secondary-foreground hover:bg-secondary/80 transition-colors">
+              <Home size={18} />
+              Mergeți acasă
+            </Link>
+          </div>
+        </div>
+      </div>
+    </RootDocument>
+  )
+}
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   useEffect(() => {
