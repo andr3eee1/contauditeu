@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { HeadContent, Scripts, createRootRoute, Link } from '@tanstack/react-router'
+import { HeadContent, Scripts, createRootRoute, Link, ScrollRestoration } from '@tanstack/react-router'
 import { FileQuestion, AlertTriangle, Home, ArrowLeft } from 'lucide-react'
 
 import appCss from '../styles.css?url'
@@ -97,21 +97,39 @@ function ErrorComponent({ error }: { error: any }) {
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    // Add smooth scrolling after a tiny delay so it doesn't animate on page refresh
-    const timeout = setTimeout(() => {
-      document.documentElement.classList.add('scroll-smooth');
-    }, 100);
-    return () => clearTimeout(timeout);
+    // Intercept clicks on hash links to scroll smoothly, allowing us to remove global 'scroll-smooth'
+    // which breaks the browser's back-button scroll restoration.
+    const handleHashClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const anchor = target.closest('a');
+      
+      if (anchor && anchor.hash && anchor.pathname === window.location.pathname) {
+        const id = anchor.hash.replace('#', '');
+        const element = document.getElementById(id);
+        if (element) {
+          // Temporarily enable smooth scrolling just for this click
+          document.documentElement.style.scrollBehavior = 'smooth';
+          
+          // Remove it after the scroll animation is finished (1 second)
+          setTimeout(() => {
+            document.documentElement.style.scrollBehavior = '';
+          }, 1000);
+        }
+      }
+    };
+
+    document.addEventListener('click', handleHashClick);
+    return () => document.removeEventListener('click', handleHashClick);
   }, []);
 
   return (
-    <html lang="ro" className="scroll-pt-20">
+    <html lang="ro" className="scroll-pt-24">
       <head>
         <HeadContent />
       </head>
       <body>
         {children}
-
+        <ScrollRestoration />
         <Scripts />
       </body>
     </html>
