@@ -47,7 +47,6 @@ export const Route = createFileRoute('/')({
             "latitude": 40.761293,
             "longitude": -73.982294
           },
-          "telephone": "+40312345678",
           "email": "contact@contaudit.eu",
           "priceRange": "$$",
           "founder": {
@@ -65,6 +64,44 @@ export const Route = createFileRoute('/')({
 function Home() {
   const currentYear = new Date().getFullYear();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  
+  const [contactName, setContactName] = useState('');
+  const [contactCompany, setContactCompany] = useState('');
+  const [contactEmail, setContactEmail] = useState('');
+  const [contactMessage, setContactMessage] = useState('');
+  const [contactLoading, setContactLoading] = useState(false);
+  const [contactSuccess, setContactSuccess] = useState(false);
+  const [contactError, setContactError] = useState('');
+
+  const handleContactSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setContactLoading(true);
+    setContactError('');
+    setContactSuccess(false);
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: contactName + (contactCompany ? ` (${contactCompany})` : ''),
+          email: contactEmail,
+          message: contactMessage
+        })
+      });
+      if (!res.ok) throw new Error('A apărut o eroare. Vă rugăm să încercați din nou.');
+      
+      setContactSuccess(true);
+      setContactName('');
+      setContactCompany('');
+      setContactEmail('');
+      setContactMessage('');
+    } catch (err: any) {
+      setContactError(err.message);
+    } finally {
+      setContactLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans selection:bg-gold/20">
@@ -440,10 +477,6 @@ function Home() {
                   <a href="mailto:contact@contaudit.eu" className="text-xl font-medium text-primary hover:text-gold transition-colors">contact@contaudit.eu</a>
                 </div>
                 <div>
-                  <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-2">Telefon</p>
-                  <a href="tel:+40312345678" className="text-xl font-medium text-foreground hover:text-gold transition-colors">+40 31 234 5678</a>
-                </div>
-                <div>
                   <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-2">Adresă</p>
                   <p className="text-xl font-medium text-foreground">București, România</p>
                 </div>
@@ -451,7 +484,17 @@ function Home() {
             </div>
             
             <div className="bg-card p-8 md:p-10 rounded-3xl shadow-soft border border-border/60">
-              <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+              <form className="space-y-6" onSubmit={handleContactSubmit}>
+                {contactSuccess && (
+                  <div className="p-4 rounded-xl bg-green-500/10 text-green-700 text-sm border border-green-500/20">
+                    Mesajul dumneavoastră a fost trimis cu succes. Vă vom contacta în scurt timp!
+                  </div>
+                )}
+                {contactError && (
+                  <div className="p-4 rounded-xl bg-destructive/10 text-destructive text-sm border border-destructive/20">
+                    {contactError}
+                  </div>
+                )}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div className="space-y-2">
                     <label htmlFor="name" className="text-sm font-medium text-foreground ml-1">Nume și prenume <span className="text-destructive">*</span></label>
@@ -459,6 +502,8 @@ function Home() {
                       type="text" 
                       id="name" 
                       required 
+                      value={contactName}
+                      onChange={(e) => setContactName(e.target.value)}
                       className="w-full h-12 px-5 rounded-full border border-input bg-transparent text-sm focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all"
                       placeholder="Ex: Ion Popescu"
                     />
@@ -468,6 +513,8 @@ function Home() {
                     <input 
                       type="text" 
                       id="company" 
+                      value={contactCompany}
+                      onChange={(e) => setContactCompany(e.target.value)}
                       className="w-full h-12 px-5 rounded-full border border-input bg-transparent text-sm focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all"
                       placeholder="Numele firmei"
                     />
@@ -480,16 +527,21 @@ function Home() {
                     type="email" 
                     id="email" 
                     required 
+                    value={contactEmail}
+                    onChange={(e) => setContactEmail(e.target.value)}
                     className="w-full h-12 px-5 rounded-full border border-input bg-transparent text-sm focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all"
                     placeholder="adresa@email.com"
                   />
                 </div>
                 
                 <div className="space-y-2">
-                  <label htmlFor="message" className="text-sm font-medium text-foreground ml-1">Mesaj</label>
+                  <label htmlFor="message" className="text-sm font-medium text-foreground ml-1">Mesaj <span className="text-destructive">*</span></label>
                   <textarea 
                     id="message" 
                     rows={4}
+                    required
+                    value={contactMessage}
+                    onChange={(e) => setContactMessage(e.target.value)}
                     className="w-full p-5 rounded-3xl border border-input bg-transparent text-sm focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all resize-none"
                     placeholder="Cu ce vă putem ajuta?"
                   ></textarea>
@@ -497,9 +549,14 @@ function Home() {
                 
                 <button 
                   type="submit" 
-                  className="w-full h-14 mt-4 rounded-full bg-navy text-navy-foreground font-medium hover:bg-navy/90 hover:shadow-lg transition-all hover:-translate-y-0.5"
+                  disabled={contactLoading}
+                  className="w-full h-14 mt-4 rounded-full bg-navy text-navy-foreground font-medium hover:bg-navy/90 hover:shadow-lg transition-all hover:-translate-y-0.5 disabled:opacity-70 disabled:hover:translate-y-0 flex items-center justify-center gap-2"
                 >
-                  Trimite solicitarea
+                  {contactLoading ? (
+                    <div className="w-5 h-5 border-2 border-navy-foreground/30 border-t-navy-foreground rounded-full animate-spin"></div>
+                  ) : (
+                    "Trimite Mesajul"
+                  )}
                 </button>
               </form>
             </div>
