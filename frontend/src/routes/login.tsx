@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
-import { ArrowRight, Lock, Mail } from 'lucide-react'
+import { ArrowRight, Lock, Mail, Loader2 } from 'lucide-react'
 
 export const Route = createFileRoute('/login')({
   component: Login,
@@ -110,8 +110,17 @@ function Login() {
               disabled={loading}
               className="w-full h-12 mt-4 rounded-full bg-navy text-navy-foreground font-medium hover:bg-navy/90 hover:shadow-lg transition-all hover:-translate-y-0.5 disabled:opacity-70 disabled:pointer-events-none flex items-center justify-center gap-2"
             >
-              {loading ? 'Se conectează...' : 'Autentificare'}
-              {!loading && <ArrowRight size={16} />}
+              {loading ? (
+                <>
+                  <Loader2 size={18} className="animate-spin" />
+                  Se conectează...
+                </>
+              ) : (
+                <>
+                  Autentificare
+                  <ArrowRight size={16} />
+                </>
+              )}
             </button>
           </form>
 

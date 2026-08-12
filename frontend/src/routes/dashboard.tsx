@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { LogOut, LayoutDashboard, FileText, User } from 'lucide-react'
+import { LogOut, LayoutDashboard, FileText, User, Loader2 } from 'lucide-react'
 
 export const Route = createFileRoute('/dashboard')({
   component: Dashboard,
@@ -33,7 +33,14 @@ function Dashboard() {
     navigate({ to: '/login' })
   }
 
-  if (!user) return null // or loading spinner
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-surface flex flex-col items-center justify-center p-4">
+        <Loader2 size={40} className="animate-spin text-gold mb-4" />
+        <p className="text-muted-foreground font-medium animate-pulse">Se încarcă spațiul de lucru...</p>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-surface flex">
