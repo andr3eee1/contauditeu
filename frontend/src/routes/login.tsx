@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { ArrowRight, Lock, Mail, Loader2 } from 'lucide-react'
 
@@ -8,6 +8,13 @@ export const Route = createFileRoute('/login')({
 
 function Login() {
   const navigate = useNavigate()
+  
+  useEffect(() => {
+    if (localStorage.getItem('token') && localStorage.getItem('user')) {
+      navigate({ to: '/dashboard', replace: true })
+    }
+  }, [navigate])
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
