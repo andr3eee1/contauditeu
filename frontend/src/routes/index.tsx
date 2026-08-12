@@ -160,42 +160,28 @@ function Home() {
         </div>
       </section>
 
-      {/* Afilieri / Certificari (Standing in the face!) */}
-      <section className="bg-surface py-16 md:py-20 border-b border-border/50 relative overflow-hidden">
-        {/* Glow effects for prominence */}
-        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-64 h-64 bg-gold/10 rounded-full blur-3xl -z-10"></div>
-        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-64 h-64 bg-primary/10 rounded-full blur-3xl -z-10"></div>
-        
+      {/* Afilieri / Certificari - Elegant Logo Strip */}
+      <section className="bg-white py-12 border-b border-border/50">
         <div className="max-w-6xl mx-auto px-5">
-          <p className="text-center text-sm font-bold text-muted-foreground uppercase tracking-[0.3em] mb-12">
-            Acreditat și certificat de cele mai înalte autorități profesionale
+          <p className="text-center text-xs font-bold text-slate-400 uppercase tracking-[0.25em] mb-8">
+            Certificat și autorizat de instituțiile profesionale
           </p>
-          <div className="flex flex-col md:flex-row justify-center items-stretch gap-8 md:gap-12">
-            
-            {/* CECCAR Logo block */}
-            <div className="flex-1 flex flex-col items-center gap-4 group cursor-pointer hover:-translate-y-2 transition-transform duration-300">
-              <div className="w-full max-w-[280px] h-32 rounded-3xl bg-white flex items-center justify-center shadow-xl border border-border/50 p-6 group-hover:shadow-[0_0_40px_rgba(194,155,87,0.15)] transition-shadow">
-                <img src="/sigla-ceccar.png" alt="CECCAR Logo" className="w-full h-full object-contain mix-blend-multiply" />
-              </div>
-              <p className="text-xs text-muted-foreground font-semibold uppercase tracking-widest text-center mt-2">Corpul Experților Contabili</p>
-            </div>
-            
-            {/* CAFR Logo block */}
-            <div className="flex-1 flex flex-col items-center gap-4 group cursor-pointer hover:-translate-y-2 transition-transform duration-300">
-              <div className="w-full max-w-[280px] h-32 rounded-3xl bg-white flex items-center justify-center shadow-xl border border-border/50 p-6 group-hover:shadow-[0_0_40px_rgba(26,35,64,0.1)] transition-shadow">
-                <img src="/ca.png" alt="CAFR Logo" className="w-full h-full object-contain mix-blend-multiply" />
-              </div>
-              <p className="text-xs text-muted-foreground font-semibold uppercase tracking-widest text-center mt-2">Camera Auditorilor Financiari</p>
-            </div>
-
-            {/* ASPAAS Logo block */}
-            <div className="flex-1 flex flex-col items-center gap-4 group cursor-pointer hover:-translate-y-2 transition-transform duration-300">
-              <div className="w-full max-w-[280px] h-32 rounded-3xl bg-white flex items-center justify-center shadow-xl border border-border/50 p-3 group-hover:shadow-[0_0_40px_rgba(26,35,64,0.1)] transition-shadow">
-                <img src="/ASPAAS-logo.png" alt="ASPAAS Logo" className="w-full h-full object-contain mix-blend-multiply" />
-              </div>
-              <p className="text-xs text-muted-foreground font-semibold uppercase tracking-widest text-center mt-2">Autoritatea pentru Supravegherea Auditului</p>
-            </div>
-            
+          <div className="flex flex-wrap justify-center items-center gap-12 md:gap-28 opacity-60 hover:opacity-100 transition-opacity duration-500">
+            <img 
+              src="/sigla-ceccar.png" 
+              alt="CECCAR Logo" 
+              className="h-12 md:h-16 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 mix-blend-multiply" 
+            />
+            <img 
+              src="/ca.png" 
+              alt="CAFR Logo" 
+              className="h-14 md:h-20 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 mix-blend-multiply" 
+            />
+            <img 
+              src="/ASPAAS-logo.png" 
+              alt="ASPAAS Logo" 
+              className="h-10 md:h-14 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 mix-blend-multiply" 
+            />
           </div>
         </div>
       </section>
