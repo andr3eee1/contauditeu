@@ -68,48 +68,50 @@ function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans selection:bg-gold/20">
-      {/* Header Sticky */}
-      <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-background/90 border-b border-border/70 shadow-sm">
-        <div className="max-w-6xl mx-auto px-5 h-20 flex items-center justify-between">
-          <a href="#" className="flex items-baseline gap-0.5 group z-50" onClick={() => setMobileMenuOpen(false)}>
-            <span className="font-display text-2xl tracking-tight text-navy group-hover:text-gold transition-colors">contaudit</span>
-            <span className="text-xs font-semibold text-muted-foreground">.eu</span>
-          </a>
-          
-          <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
-            <a href="#servicii" className="text-foreground/80 hover:text-gold transition-colors">Servicii</a>
-            <a href="#despre" className="text-foreground/80 hover:text-gold transition-colors">Despre noi</a>
-            <a href="#proces" className="text-foreground/80 hover:text-gold transition-colors">Proces</a>
-            <a href="#contact" className="text-foreground/80 hover:text-gold transition-colors">Contact</a>
-          </nav>
-
-          <a href="#contact" className="hidden md:inline-flex items-center justify-center rounded-sm bg-navy px-5 py-2.5 text-sm font-medium text-navy-foreground hover:bg-navy/90 transition-colors">
-            Programează o discuție
-          </a>
-          
-          <button 
-            className="md:hidden flex items-center justify-center p-2 -mr-2 text-foreground z-50"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-        
-        {mobileMenuOpen && (
-          <div className="md:hidden fixed inset-0 top-20 bg-background/95 backdrop-blur-sm z-40 flex flex-col p-5 border-t border-border/50 animate-in fade-in slide-in-from-top-4 duration-200">
-            <nav className="flex flex-col gap-6 text-lg font-medium pt-4">
-              <a href="#servicii" onClick={() => setMobileMenuOpen(false)} className="text-foreground/80 hover:text-gold transition-colors border-b border-border/40 pb-4">Servicii</a>
-              <a href="#despre" onClick={() => setMobileMenuOpen(false)} className="text-foreground/80 hover:text-gold transition-colors border-b border-border/40 pb-4">Despre noi</a>
-              <a href="#proces" onClick={() => setMobileMenuOpen(false)} className="text-foreground/80 hover:text-gold transition-colors border-b border-border/40 pb-4">Proces</a>
-              <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="text-foreground/80 hover:text-gold transition-colors pb-4">Contact</a>
+      {/* Header Sticky Floating */}
+      <div className="py-6 px-4 sticky top-0 z-50">
+        <header className="max-w-5xl mx-auto backdrop-blur-xl bg-background/85 border border-border/50 shadow-soft rounded-full">
+          <div className="h-16 flex items-center justify-between px-6 md:px-8">
+            <a href="#" className="flex items-baseline gap-0.5 group z-50" onClick={() => setMobileMenuOpen(false)}>
+              <span className="font-display text-2xl tracking-tight text-navy group-hover:text-gold transition-colors">contaudit</span>
+              <span className="text-xs font-semibold text-muted-foreground">.eu</span>
+            </a>
+            
+            <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
+              <a href="#servicii" className="text-foreground/80 hover:text-gold transition-colors">Servicii</a>
+              <a href="#despre" className="text-foreground/80 hover:text-gold transition-colors">Despre noi</a>
+              <a href="#proces" className="text-foreground/80 hover:text-gold transition-colors">Proces</a>
+              <a href="#contact" className="text-foreground/80 hover:text-gold transition-colors">Contact</a>
             </nav>
-            <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="mt-8 inline-flex items-center justify-center rounded-sm bg-navy px-5 py-4 text-base font-medium text-navy-foreground hover:bg-navy/90 transition-colors w-full">
+
+            <a href="#contact" className="hidden md:inline-flex items-center justify-center rounded-full bg-navy px-6 py-2 text-sm font-medium text-navy-foreground hover:bg-navy/90 hover:shadow-md transition-all hover:-translate-y-0.5">
               Programează o discuție
             </a>
+            
+            <button 
+              className="md:hidden flex items-center justify-center p-2 -mr-2 text-foreground z-50"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
           </div>
-        )}
-      </header>
+          
+          {mobileMenuOpen && (
+            <div className="md:hidden fixed inset-x-4 top-24 bg-background/95 backdrop-blur-md z-40 flex flex-col p-6 rounded-2xl shadow-xl border border-border/50 animate-in fade-in slide-in-from-top-4 duration-200">
+              <nav className="flex flex-col gap-6 text-lg font-medium pt-2">
+                <a href="#servicii" onClick={() => setMobileMenuOpen(false)} className="text-foreground/80 hover:text-gold transition-colors border-b border-border/40 pb-4">Servicii</a>
+                <a href="#despre" onClick={() => setMobileMenuOpen(false)} className="text-foreground/80 hover:text-gold transition-colors border-b border-border/40 pb-4">Despre noi</a>
+                <a href="#proces" onClick={() => setMobileMenuOpen(false)} className="text-foreground/80 hover:text-gold transition-colors border-b border-border/40 pb-4">Proces</a>
+                <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="text-foreground/80 hover:text-gold transition-colors pb-4">Contact</a>
+              </nav>
+              <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="mt-8 inline-flex items-center justify-center rounded-full bg-navy px-5 py-4 text-base font-medium text-navy-foreground hover:bg-navy/90 transition-colors w-full">
+                Programează o discuție
+              </a>
+            </div>
+          )}
+        </header>
+      </div>
 
       {/* Hero */}
       <section className="relative bg-navy text-navy-foreground overflow-hidden pt-16 md:pt-24 pb-20 md:pb-32">
@@ -131,11 +133,11 @@ function Home() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 mb-16">
-              <a href="#contact" className="inline-flex items-center justify-center rounded-sm bg-gold px-8 py-4 text-sm font-medium text-gold-foreground hover:bg-gold/90 transition-colors gap-2">
+              <a href="#contact" className="inline-flex items-center justify-center rounded-full bg-gold px-8 py-4 text-sm font-medium text-gold-foreground hover:bg-gold/90 hover:shadow-lg transition-all hover:-translate-y-0.5 gap-2">
                 Solicită o ofertă
                 <ArrowRight size={16} />
               </a>
-              <a href="#servicii" className="inline-flex items-center justify-center rounded-sm border border-navy-foreground/30 px-8 py-4 text-sm font-medium text-navy-foreground hover:bg-navy-foreground/10 transition-colors">
+              <a href="#servicii" className="inline-flex items-center justify-center rounded-full border border-navy-foreground/30 px-8 py-4 text-sm font-medium text-navy-foreground hover:bg-navy-foreground/10 transition-colors">
                 Vezi serviciile
               </a>
             </div>
@@ -167,8 +169,8 @@ function Home() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-card p-8 rounded-sm shadow-soft border border-border transition-transform hover:-translate-y-1 duration-300">
-              <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-6">
+            <div className="bg-card p-8 rounded-2xl shadow-soft border border-border/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gold/30">
+              <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6">
                 <FileSpreadsheet size={24} strokeWidth={1.5} />
               </div>
               <h3 className="font-display text-2xl mb-3">Contabilitate financiară</h3>
@@ -252,15 +254,15 @@ function Home() {
             </div>
             
             <div className="relative">
-              <div className="aspect-[4/5] rounded-sm overflow-hidden shadow-soft relative z-10 border border-border/50">
-                <img src="/founder.jpg" alt="Ioana Popescu, Expert Contabil și Auditor Financiar" className="w-full h-full object-cover" />
+              <div className="aspect-[4/5] rounded-3xl overflow-hidden shadow-xl relative z-10 border border-border/50">
+                <img src="/founder.jpg" alt="Ioana Popescu, Expert Contabil și Auditor Financiar" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
               </div>
-              <div className="absolute -bottom-6 -left-6 bg-surface p-6 rounded-sm shadow-soft border border-border z-20">
+              <div className="absolute -bottom-6 -left-6 bg-surface/90 backdrop-blur-md p-6 rounded-2xl shadow-soft border border-border/60 z-20">
                 <p className="font-display text-2xl text-foreground">Ioana Popescu</p>
                 <p className="text-sm text-muted-foreground uppercase tracking-wider font-semibold mt-1">Expert Contabil</p>
               </div>
               {/* Decorative block */}
-              <div className="absolute -top-6 -right-6 w-3/4 h-3/4 bg-primary/5 rounded-sm -z-10"></div>
+              <div className="absolute -top-6 -right-6 w-3/4 h-3/4 bg-gradient-to-br from-gold/10 to-primary/5 rounded-3xl -z-10 blur-xl"></div>
             </div>
           </div>
         </div>
@@ -323,7 +325,7 @@ function Home() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-card p-8 rounded-sm shadow-soft border border-border relative">
+            <div className="bg-card p-8 rounded-3xl shadow-soft border border-border/60 relative hover:-translate-y-2 transition-all duration-300">
               <Quote className="absolute top-6 right-6 text-primary/10" size={48} />
               <div className="flex gap-1 text-gold mb-6">
                 {[...Array(5)].map((_, i) => <Star key={i} size={16} fill="currentColor" />)}
@@ -412,54 +414,54 @@ function Home() {
               </div>
             </div>
             
-            <div className="bg-card p-8 rounded-sm shadow-soft border border-border">
-              <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+            <div className="bg-card p-8 md:p-10 rounded-3xl shadow-soft border border-border/60">
+              <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div className="space-y-2">
-                    <label htmlFor="name" className="text-sm font-medium text-foreground">Nume și prenume <span className="text-destructive">*</span></label>
+                    <label htmlFor="name" className="text-sm font-medium text-foreground ml-1">Nume și prenume <span className="text-destructive">*</span></label>
                     <input 
                       type="text" 
                       id="name" 
                       required 
-                      className="w-full h-12 px-4 rounded-sm border border-input bg-transparent text-sm focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
+                      className="w-full h-12 px-5 rounded-full border border-input bg-transparent text-sm focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all"
                       placeholder="Ex: Ion Popescu"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label htmlFor="company" className="text-sm font-medium text-foreground">Companie</label>
+                    <label htmlFor="company" className="text-sm font-medium text-foreground ml-1">Companie</label>
                     <input 
                       type="text" 
                       id="company" 
-                      className="w-full h-12 px-4 rounded-sm border border-input bg-transparent text-sm focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
+                      className="w-full h-12 px-5 rounded-full border border-input bg-transparent text-sm focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all"
                       placeholder="Numele firmei"
                     />
                   </div>
                 </div>
                 
                 <div className="space-y-2">
-                  <label htmlFor="email" className="text-sm font-medium text-foreground">Email <span className="text-destructive">*</span></label>
+                  <label htmlFor="email" className="text-sm font-medium text-foreground ml-1">Email <span className="text-destructive">*</span></label>
                   <input 
                     type="email" 
                     id="email" 
                     required 
-                    className="w-full h-12 px-4 rounded-sm border border-input bg-transparent text-sm focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
+                    className="w-full h-12 px-5 rounded-full border border-input bg-transparent text-sm focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all"
                     placeholder="adresa@email.com"
                   />
                 </div>
                 
                 <div className="space-y-2">
-                  <label htmlFor="message" className="text-sm font-medium text-foreground">Mesaj</label>
+                  <label htmlFor="message" className="text-sm font-medium text-foreground ml-1">Mesaj</label>
                   <textarea 
                     id="message" 
                     rows={4}
-                    className="w-full p-4 rounded-sm border border-input bg-transparent text-sm focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all resize-none"
+                    className="w-full p-5 rounded-3xl border border-input bg-transparent text-sm focus:outline-none focus:ring-2 focus:ring-gold/50 focus:border-transparent transition-all resize-none"
                     placeholder="Cu ce vă putem ajuta?"
                   ></textarea>
                 </div>
                 
                 <button 
                   type="submit" 
-                  className="w-full h-12 mt-2 rounded-sm bg-navy text-navy-foreground font-medium hover:bg-navy/90 transition-colors"
+                  className="w-full h-14 mt-4 rounded-full bg-navy text-navy-foreground font-medium hover:bg-navy/90 hover:shadow-lg transition-all hover:-translate-y-0.5"
                 >
                   Trimite solicitarea
                 </button>
