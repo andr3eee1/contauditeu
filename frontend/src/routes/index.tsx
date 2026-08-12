@@ -84,9 +84,15 @@ function Home() {
               <a href="#contact" className="text-foreground/80 hover:text-gold transition-colors">Contact</a>
             </nav>
 
-            <a href="#contact" className="hidden md:inline-flex items-center justify-center rounded-full bg-navy px-6 py-2 text-sm font-medium text-navy-foreground hover:bg-navy/90 hover:shadow-md transition-all hover:-translate-y-0.5">
-              Programează o discuție
-            </a>
+            <div className="hidden md:flex items-center gap-6">
+              <Link to="/login" className="text-sm font-medium text-navy hover:text-gold transition-colors flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg>
+                Portal
+              </Link>
+              <a href="#contact" className="inline-flex items-center justify-center rounded-full bg-navy px-6 py-2 text-sm font-medium text-navy-foreground hover:bg-navy/90 hover:shadow-md transition-all hover:-translate-y-0.5">
+                Programează o discuție
+              </a>
+            </div>
             
             <button 
               className="md:hidden flex items-center justify-center p-2 -mr-2 text-foreground z-50"
@@ -103,9 +109,13 @@ function Home() {
                 <a href="#servicii" onClick={() => setMobileMenuOpen(false)} className="text-foreground/80 hover:text-gold transition-colors border-b border-border/40 pb-4">Servicii</a>
                 <a href="#despre" onClick={() => setMobileMenuOpen(false)} className="text-foreground/80 hover:text-gold transition-colors border-b border-border/40 pb-4">Despre noi</a>
                 <a href="#proces" onClick={() => setMobileMenuOpen(false)} className="text-foreground/80 hover:text-gold transition-colors border-b border-border/40 pb-4">Proces</a>
-                <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="text-foreground/80 hover:text-gold transition-colors pb-4">Contact</a>
+                <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="text-foreground/80 hover:text-gold transition-colors border-b border-border/40 pb-4">Contact</a>
+                <Link to="/login" onClick={() => setMobileMenuOpen(false)} className="text-navy hover:text-gold transition-colors font-semibold flex items-center gap-2 pb-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg>
+                  Portal Clienți
+                </Link>
               </nav>
-              <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="mt-8 inline-flex items-center justify-center rounded-full bg-navy px-5 py-4 text-base font-medium text-navy-foreground hover:bg-navy/90 transition-colors w-full">
+              <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="mt-6 inline-flex items-center justify-center rounded-full bg-navy px-5 py-4 text-base font-medium text-navy-foreground hover:bg-navy/90 transition-colors w-full">
                 Programează o discuție
               </a>
             </div>
