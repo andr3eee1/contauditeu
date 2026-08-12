@@ -1,0 +1,41 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            String     @id @default(uuid())
+  name          String
+  email         String     @unique
+  passwordHash  String
+  role          String     @default("CLIENT") // "ADMIN" or "CLIENT"
+  createdAt     DateTime   @default(now())
+  
+  requests      Request[]
+  documents     Document[]
+}
+
+model Request {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  status      String   @default("PENDING") // PENDING, IN_PROGRESS, COMPLETED
+  createdAt   DateTime @default(now())
+  
+  clientId    String
+  client      User     @relation(fields: [clientId], references: [id])
+}
+
+model Document {
+  id           String   @id @default(uuid())
+  title        String
+  fileUrl      String
+  createdAt    DateTime @default(now())
+  
+  clientId     String
+  client       User     @relation(fields: [clientId], references: [id])
+}
