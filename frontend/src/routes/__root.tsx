@@ -26,8 +26,17 @@ export const Route = createRootRoute({
   }),
   notFoundComponent: NotFoundComponent,
   errorComponent: ErrorComponent,
+  pendingComponent: PendingComponent,
   shellComponent: RootDocument,
 })
+
+function PendingComponent() {
+  return (
+    <div className="fixed inset-0 bg-background/50 backdrop-blur-sm flex items-center justify-center z-[9999] animate-in fade-in duration-300">
+      <div className="w-12 h-12 border-4 border-navy/20 border-t-gold rounded-full animate-spin"></div>
+    </div>
+  )
+}
 
 function NotFoundComponent() {
   return (
