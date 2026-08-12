@@ -170,7 +170,7 @@ function Home() {
             <img 
               src="/sigla-ceccar.png" 
               alt="CECCAR Logo" 
-              className="h-12 md:h-16 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 mix-blend-multiply" 
+              className="h-20 md:h-28 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 mix-blend-multiply" 
             />
             <img 
               src="/ca.png" 
