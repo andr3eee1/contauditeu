@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --radius: 0.375rem;
+  --radius: 1rem;
   --background: oklch(0.995 0.003 95);
   --foreground: oklch(0.22 0.035 258);
   --card: oklch(1 0 0);
@@ -25,8 +25,8 @@
   --navy-foreground: oklch(0.97 0.008 95);
   --gold: oklch(0.76 0.115 82);
   --gold-foreground: oklch(0.2 0.03 258);
-  --surface: oklch(0.975 0.008 95);
-  --shadow-soft: 0 1px 2px oklch(0.24 0.055 258 / 0.06), 0 12px 32px -12px oklch(0.24 0.055 258 / 0.18);
+  --surface: oklch(0.985 0.005 95);
+  --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.04), 0 4px 10px rgba(0, 0, 0, 0.02);
 }
 
 .dark {
