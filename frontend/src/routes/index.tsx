@@ -160,8 +160,49 @@ function Home() {
         </div>
       </section>
 
+      {/* Afilieri / Certificari (Standing in the face!) */}
+      <section className="bg-surface py-12 md:py-16 border-b border-border/50 relative overflow-hidden">
+        {/* Glow effects for prominence */}
+        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-64 h-64 bg-gold/5 rounded-full blur-3xl -z-10"></div>
+        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10"></div>
+        
+        <div className="max-w-6xl mx-auto px-5">
+          <p className="text-center text-sm font-bold text-muted-foreground uppercase tracking-[0.3em] mb-10">
+            Acreditat și certificat de cele mai înalte autorități profesionale
+          </p>
+          <div className="flex flex-col md:flex-row justify-center items-center gap-12 md:gap-32">
+            
+            {/* CECCAR Prominent Logo block */}
+            <div className="flex items-center gap-5 group cursor-pointer hover:scale-105 transition-transform duration-300">
+              <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-gold/20 to-gold/5 flex items-center justify-center text-gold shadow-[0_0_30px_rgba(194,155,87,0.2)] border border-gold/30 group-hover:border-gold/60 transition-colors">
+                <Check size={40} strokeWidth={2.5} />
+              </div>
+              <div>
+                <p className="font-display text-4xl font-bold tracking-tight text-foreground">CECCAR</p>
+                <p className="text-xs text-muted-foreground font-semibold uppercase tracking-widest mt-1">Corpul Experților Contabili</p>
+              </div>
+            </div>
+            
+            {/* Vertical divider (desktop only) */}
+            <div className="hidden md:block w-px h-24 bg-border/80"></div>
+            
+            {/* CAFR Prominent Logo block */}
+            <div className="flex items-center gap-5 group cursor-pointer hover:scale-105 transition-transform duration-300">
+              <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-navy/10 to-transparent flex items-center justify-center text-navy shadow-[0_0_30px_rgba(26,35,64,0.1)] border border-navy/20 group-hover:border-navy/40 transition-colors">
+                <ShieldCheck size={40} strokeWidth={2.5} />
+              </div>
+              <div>
+                <p className="font-display text-4xl font-bold tracking-tight text-foreground">CAFR</p>
+                <p className="text-xs text-muted-foreground font-semibold uppercase tracking-widest mt-1">Camera Auditorilor Financiari</p>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </section>
+
       {/* Servicii */}
-      <section id="servicii" className="py-24 bg-surface">
+      <section id="servicii" className="py-24 bg-background">
         <div className="max-w-6xl mx-auto px-5">
           <div className="mb-16">
             <span className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground block mb-4">Servicii</span>
