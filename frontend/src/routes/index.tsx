@@ -124,10 +124,10 @@ function Home() {
               Contabilitate · Audit · Fiscalitate
             </span>
             <h1 className="font-display text-5xl md:text-7xl mb-6 font-normal tracking-[-0.01em] leading-[1.1]">
-              Lorem ipsum dolor sit amet consectetur adipiscing.
+              Firmă de Contabilitate și Audit Financiar cu Experiență.
             </h1>
             <p className="text-lg md:text-xl text-navy-foreground/80 mb-10 max-w-2xl font-light">
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae.
+              Oferim antreprenorilor și companiilor din România servicii complete de contabilitate, audit, salarizare și consultanță fiscală. Cifre corecte pentru decizii sigure.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 mb-16">
@@ -225,7 +225,7 @@ function Home() {
             <div>
               <span className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground block mb-4">Despre noi</span>
               <h2 className="font-display text-4xl md:text-5xl font-normal tracking-[-0.01em] text-foreground mb-8 gold-rule">
-                Lorem ipsum dolor sit amet elit.
+                Expertiza unui profesionist dedicat.
               </h2>
               <div className="space-y-6 text-foreground/80 leading-relaxed text-lg mb-8">
                 <p>
@@ -237,9 +237,9 @@ function Home() {
               </div>
               <ul className="space-y-4 mb-8">
                 {[
-                  "Lorem ipsum dolor sit amet consectetur",
-                  "Adipiscing elit sed do eiusmod tempor",
-                  "Incididunt ut labore et dolore magna"
+                  "Membru al corpului profesional CECCAR și CAFR",
+                  "Expertiză în industrii diverse (IT, producție, comerț)",
+                  "Comunicare fluentă în română și engleză"
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-4">
                     <div className="mt-1 bg-gold/20 text-gold rounded-full p-1 flex-shrink-0">
