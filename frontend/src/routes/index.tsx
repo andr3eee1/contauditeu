@@ -161,40 +161,39 @@ function Home() {
       </section>
 
       {/* Afilieri / Certificari (Standing in the face!) */}
-      <section className="bg-surface py-12 md:py-16 border-b border-border/50 relative overflow-hidden">
+      <section className="bg-surface py-16 md:py-20 border-b border-border/50 relative overflow-hidden">
         {/* Glow effects for prominence */}
-        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-64 h-64 bg-gold/5 rounded-full blur-3xl -z-10"></div>
-        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10"></div>
+        <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-64 h-64 bg-gold/10 rounded-full blur-3xl -z-10"></div>
+        <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-64 h-64 bg-primary/10 rounded-full blur-3xl -z-10"></div>
         
         <div className="max-w-6xl mx-auto px-5">
-          <p className="text-center text-sm font-bold text-muted-foreground uppercase tracking-[0.3em] mb-10">
+          <p className="text-center text-sm font-bold text-muted-foreground uppercase tracking-[0.3em] mb-12">
             Acreditat și certificat de cele mai înalte autorități profesionale
           </p>
-          <div className="flex flex-col md:flex-row justify-center items-center gap-12 md:gap-32">
+          <div className="flex flex-col md:flex-row justify-center items-stretch gap-8 md:gap-12">
             
-            {/* CECCAR Prominent Logo block */}
-            <div className="flex items-center gap-5 group cursor-pointer hover:scale-105 transition-transform duration-300">
-              <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-gold/20 to-gold/5 flex items-center justify-center text-gold shadow-[0_0_30px_rgba(194,155,87,0.2)] border border-gold/30 group-hover:border-gold/60 transition-colors">
-                <Check size={40} strokeWidth={2.5} />
+            {/* CECCAR Logo block */}
+            <div className="flex-1 flex flex-col items-center gap-4 group cursor-pointer hover:-translate-y-2 transition-transform duration-300">
+              <div className="w-full max-w-[280px] h-32 rounded-3xl bg-white flex items-center justify-center shadow-xl border border-border/50 p-6 group-hover:shadow-[0_0_40px_rgba(194,155,87,0.15)] transition-shadow">
+                <img src="/sigla-ceccar.png" alt="CECCAR Logo" className="w-full h-full object-contain mix-blend-multiply" />
               </div>
-              <div>
-                <p className="font-display text-4xl font-bold tracking-tight text-foreground">CECCAR</p>
-                <p className="text-xs text-muted-foreground font-semibold uppercase tracking-widest mt-1">Corpul Experților Contabili</p>
-              </div>
+              <p className="text-xs text-muted-foreground font-semibold uppercase tracking-widest text-center mt-2">Corpul Experților Contabili</p>
             </div>
             
-            {/* Vertical divider (desktop only) */}
-            <div className="hidden md:block w-px h-24 bg-border/80"></div>
-            
-            {/* CAFR Prominent Logo block */}
-            <div className="flex items-center gap-5 group cursor-pointer hover:scale-105 transition-transform duration-300">
-              <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-navy/10 to-transparent flex items-center justify-center text-navy shadow-[0_0_30px_rgba(26,35,64,0.1)] border border-navy/20 group-hover:border-navy/40 transition-colors">
-                <ShieldCheck size={40} strokeWidth={2.5} />
+            {/* CAFR Logo block */}
+            <div className="flex-1 flex flex-col items-center gap-4 group cursor-pointer hover:-translate-y-2 transition-transform duration-300">
+              <div className="w-full max-w-[280px] h-32 rounded-3xl bg-white flex items-center justify-center shadow-xl border border-border/50 p-6 group-hover:shadow-[0_0_40px_rgba(26,35,64,0.1)] transition-shadow">
+                <img src="/ca.png" alt="CAFR Logo" className="w-full h-full object-contain mix-blend-multiply" />
               </div>
-              <div>
-                <p className="font-display text-4xl font-bold tracking-tight text-foreground">CAFR</p>
-                <p className="text-xs text-muted-foreground font-semibold uppercase tracking-widest mt-1">Camera Auditorilor Financiari</p>
+              <p className="text-xs text-muted-foreground font-semibold uppercase tracking-widest text-center mt-2">Camera Auditorilor Financiari</p>
+            </div>
+
+            {/* ASPAAS Logo block */}
+            <div className="flex-1 flex flex-col items-center gap-4 group cursor-pointer hover:-translate-y-2 transition-transform duration-300">
+              <div className="w-full max-w-[280px] h-32 rounded-3xl bg-white flex items-center justify-center shadow-xl border border-border/50 p-3 group-hover:shadow-[0_0_40px_rgba(26,35,64,0.1)] transition-shadow">
+                <img src="/ASPAAS-logo.png" alt="ASPAAS Logo" className="w-full h-full object-contain mix-blend-multiply" />
               </div>
+              <p className="text-xs text-muted-foreground font-semibold uppercase tracking-widest text-center mt-2">Autoritatea pentru Supravegherea Auditului</p>
             </div>
             
           </div>
