@@ -3,6 +3,25 @@ import cors from 'cors';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { PrismaClient } from '@prisma/client';
+import multer from 'multer';
+import fs from 'fs';
+import path from 'path';
+
+const UPLOADS_DIR = path.join(__dirname, '../uploads');
+if (!fs.existsSync(UPLOADS_DIR)) {
+  fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+}
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, UPLOADS_DIR);
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, uniqueSuffix + '-' + file.originalname);
+  }
+});
+const upload = multer({ storage });
 
 const prisma = new PrismaClient();
 const app = express();
@@ -168,16 +187,50 @@ app.put('/api/admin/requests/:id', authenticate, requireAdmin, async (req: any, 
   }
 });
 
-app.post('/api/admin/documents/:clientId', authenticate, requireAdmin, async (req: any, res: any) => {
+app.post('/api/admin/documents/:clientId', authenticate, requireAdmin, upload.single('file'), async (req: any, res: any) => {
   try {
     const { clientId } = req.params;
-    const { title, fileUrl } = req.body;
+    const { title } = req.body;
+    
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+    
+    const fileUrl = req.file.filename;
     
     const doc = await prisma.document.create({
       data: { title, fileUrl, clientId }
     });
     
     res.status(201).json(doc);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// --- FILE DOWNLOAD (Shared) --- //
+app.get('/api/documents/:id/download', authenticate, async (req: any, res: any) => {
+  try {
+    const { id } = req.params;
+    const userId = req.user.id;
+    const role = req.user.role;
+
+    const doc = await prisma.document.findUnique({ where: { id } });
+    if (!doc) {
+      return res.status(404).json({ error: 'Document not found' });
+    }
+
+    if (role !== 'ADMIN' && doc.clientId !== userId) {
+      return res.status(403).json({ error: 'Forbidden' });
+    }
+
+    const filePath = path.join(UPLOADS_DIR, doc.fileUrl);
+    if (!fs.existsSync(filePath)) {
+      return res.status(404).json({ error: 'File not found on server' });
+    }
+
+    res.download(filePath, doc.fileUrl.split('-').slice(1).join('-') || doc.fileUrl);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
