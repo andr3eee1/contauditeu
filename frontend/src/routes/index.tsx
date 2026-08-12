@@ -177,40 +177,40 @@ function Home() {
               <p className="text-muted-foreground leading-relaxed text-sm">Evidență contabilă completă, balanțe, situații financiare anuale și raportări către ANAF, la termen și fără surprize.</p>
             </div>
             
-            <div className="bg-card p-8 rounded-sm shadow-soft border border-border transition-transform hover:-translate-y-1 duration-300">
-              <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-6">
+            <div className="bg-card p-8 rounded-2xl shadow-soft border border-border/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gold/30">
+              <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6">
                 <ClipboardCheck size={24} strokeWidth={1.5} />
               </div>
               <h3 className="font-display text-2xl mb-3">Audit financiar</h3>
               <p className="text-muted-foreground leading-relaxed text-sm">Audit statutar și voluntar al situațiilor financiare, în conformitate cu Standardele Internaționale de Audit.</p>
             </div>
             
-            <div className="bg-card p-8 rounded-sm shadow-soft border border-border transition-transform hover:-translate-y-1 duration-300">
-              <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-6">
+            <div className="bg-card p-8 rounded-2xl shadow-soft border border-border/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gold/30">
+              <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6">
                 <Users size={24} strokeWidth={1.5} />
               </div>
               <h3 className="font-display text-2xl mb-3">Salarizare și HR</h3>
               <p className="text-muted-foreground leading-relaxed text-sm">Calcul salarii, state de plată, declarația 112, administrare REVISAL și dosare de personal.</p>
             </div>
             
-            <div className="bg-card p-8 rounded-sm shadow-soft border border-border transition-transform hover:-translate-y-1 duration-300">
-              <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-6">
+            <div className="bg-card p-8 rounded-2xl shadow-soft border border-border/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gold/30">
+              <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6">
                 <BarChart3 size={24} strokeWidth={1.5} />
               </div>
               <h3 className="font-display text-2xl mb-3">Consultanță fiscală</h3>
               <p className="text-muted-foreground leading-relaxed text-sm">Optimizare fiscală legală, analiza impactului modificărilor legislative și asistență la controale.</p>
             </div>
             
-            <div className="bg-card p-8 rounded-sm shadow-soft border border-border transition-transform hover:-translate-y-1 duration-300">
-              <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-6">
+            <div className="bg-card p-8 rounded-2xl shadow-soft border border-border/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gold/30">
+              <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6">
                 <Building2 size={24} strokeWidth={1.5} />
               </div>
               <h3 className="font-display text-2xl mb-3">Înființări și restructurări</h3>
               <p className="text-muted-foreground leading-relaxed text-sm">Consultanță pentru înființare firme, modificări în actul constitutiv, fuziuni, divizări și lichidări.</p>
             </div>
             
-            <div className="bg-card p-8 rounded-sm shadow-soft border border-border transition-transform hover:-translate-y-1 duration-300">
-              <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center text-primary mb-6">
+            <div className="bg-card p-8 rounded-2xl shadow-soft border border-border/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gold/30">
+              <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6">
                 <ShieldCheck size={24} strokeWidth={1.5} />
               </div>
               <h3 className="font-display text-2xl mb-3">Due diligence</h3>
@@ -344,7 +344,7 @@ function Home() {
               </div>
             </div>
             
-            <div className="bg-card p-8 rounded-sm shadow-soft border border-border relative">
+            <div className="bg-card p-8 rounded-3xl shadow-soft border border-border/60 relative hover:-translate-y-2 transition-all duration-300">
               <Quote className="absolute top-6 right-6 text-primary/10" size={48} />
               <div className="flex gap-1 text-gold mb-6">
                 {[...Array(5)].map((_, i) => <Star key={i} size={16} fill="currentColor" />)}
@@ -363,7 +363,7 @@ function Home() {
               </div>
             </div>
             
-            <div className="bg-card p-8 rounded-sm shadow-soft border border-border relative">
+            <div className="bg-card p-8 rounded-3xl shadow-soft border border-border/60 relative hover:-translate-y-2 transition-all duration-300">
               <Quote className="absolute top-6 right-6 text-primary/10" size={48} />
               <div className="flex gap-1 text-gold mb-6">
                 {[...Array(5)].map((_, i) => <Star key={i} size={16} fill="currentColor" />)}
