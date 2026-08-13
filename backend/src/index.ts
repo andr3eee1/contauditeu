@@ -237,6 +237,26 @@ app.get('/api/documents/:id/download', authenticate, async (req: any, res: any) 
   }
 });
 
+// --- CONTACT FORM (Public) --- //
+app.post('/api/contact', async (req: any, res: any) => {
+  try {
+    const { name, email, message } = req.body;
+    
+    if (!name || !email || !message) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
+    
+    const msg = await prisma.contactMessage.create({
+      data: { name, email, message }
+    });
+    
+    res.status(201).json({ success: true, message: 'Message sent' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 // Start server
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

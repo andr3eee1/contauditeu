@@ -39,3 +39,11 @@ model Document {
   clientId     String
   client       User     @relation(fields: [clientId], references: [id])
 }
+
+model ContactMessage {
+  id          String   @id @default(uuid())
+  name        String
+  email       String
+  message     String
+  createdAt   DateTime @default(now())
+}
