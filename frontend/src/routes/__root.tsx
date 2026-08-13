@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { HeadContent, Scripts, createRootRoute, Link, ScrollRestoration } from '@tanstack/react-router'
+import { HeadContent, Scripts, createRootRoute, Link } from '@tanstack/react-router'
 import { FileQuestion, AlertTriangle, Home, ArrowLeft } from 'lucide-react'
 
 import appCss from '../styles.css?url'
@@ -138,7 +138,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         {children}
-        <ScrollRestoration />
         <Scripts />
       </body>
     </html>
