@@ -18,11 +18,11 @@ import {
 export const Route = createFileRoute('/')({
   head: () => ({
     meta: [
-      { title: 'Firmă de Contabilitate și Audit Financiar | Contaudit' },
-      { name: 'description', content: 'Cauti o firmă de contabilitate cu experiență? Oferim servicii de expertiză contabilă, audit financiar, consultanță fiscală și salarizare. Programează o discuție!' },
-      { name: 'keywords', content: 'firma contabilitate, expert contabil, servicii contabilitate, audit financiar, consultanta fiscala, firma audit, salarizare, evidenta contabila, contabilitate Bucuresti' },
+      { title: 'Firmă de Contabilitate, Audit și Management Financiar | Contaudit' },
+      { name: 'description', content: 'CONTAUDIT CONSULTING SRL: Servicii complete de expertiză contabilă, audit statutar, audit intern și management financiar în București. Experiență de peste 10 ani.' },
+      { name: 'keywords', content: 'firma contabilitate Bucuresti, audit statutar, audit intern, expert contabil, management financiar, servicii audit, consultanta fiscala, reorganizare companii, Octavia Savu' },
       { property: 'og:title', content: 'Firmă de Contabilitate și Audit Financiar | Contaudit' },
-      { property: 'og:description', content: 'Servicii de contabilitate, audit financiar, salarizare și consultanță fiscală, livrate cu rigoare și transparență.' },
+      { property: 'og:description', content: 'CONTAUDIT CONSULTING SRL oferă servicii de contabilitate, audit statutar și voluntar, livrate cu rigoare și transparență.' },
       { property: 'og:url', content: 'https://contaudit.eu/' },
       { property: 'og:type', content: 'website' },
     ],
@@ -33,25 +33,22 @@ export const Route = createFileRoute('/')({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": ["AccountingService", "FinancialService"],
-          "name": "Contaudit",
+          "name": "CONTAUDIT CONSULTING SRL",
           "url": "https://contaudit.eu",
           "areaServed": "RO",
-          "description": "Firma de contabilitate si audit financiar. Oferim servicii de expertiza contabila, audit, salarizare, consultanta fiscala si due diligence pentru companii din Romania.",
+          "description": "Societate specializată în servicii de contabilitate, management financiar, audit statutar și audit intern. Membră CECCAR, CAFR și ASPAAS.",
           "address": {
             "@type": "PostalAddress",
+            "streetAddress": "Strada Tudor Arghezi 21, H Private Arghezi",
             "addressLocality": "București",
+            "postalCode": "020943",
             "addressCountry": "RO"
-          },
-          "geo": {
-            "@type": "GeoCoordinates",
-            "latitude": 40.761293,
-            "longitude": -73.982294
           },
           "email": "contact@contaudit.eu",
           "priceRange": "$$",
           "founder": {
             "@type": "Person",
-            "name": "Ioana Popescu",
+            "name": "Octavia Savu",
             "jobTitle": "Expert Contabil si Auditor Financiar"
           }
         }),
@@ -105,7 +102,6 @@ function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans selection:bg-gold/20">
-      {/* Header Sticky Floating */}
       <div className="py-6 px-4 sticky top-0 z-50">
         <header className="max-w-5xl mx-auto backdrop-blur-xl bg-background/85 border border-border/50 shadow-soft rounded-full">
           <div className="h-16 flex items-center justify-between px-6 md:px-8">
@@ -176,7 +172,7 @@ function Home() {
               Firmă de Contabilitate și Audit Financiar cu Experiență.
             </h1>
             <p className="text-lg md:text-xl text-navy-foreground/80 mb-10 max-w-2xl font-light">
-              Oferim antreprenorilor și companiilor din România servicii complete de contabilitate, audit, salarizare și consultanță fiscală. Cifre corecte pentru decizii sigure.
+              CONTAUDIT CONSULTING SRL este o societate specializată în servicii de contabilitate, management financiar, audit statutar și intern. Cifre corecte pentru decizii sigure.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 mb-16">
@@ -242,54 +238,89 @@ function Home() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-card p-8 rounded-2xl shadow-soft border border-border/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gold/30">
-              <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6">
-                <FileSpreadsheet size={24} strokeWidth={1.5} />
-              </div>
-              <h3 className="font-display text-2xl mb-3">Contabilitate financiară</h3>
-              <p className="text-muted-foreground leading-relaxed text-sm">Evidență contabilă completă, balanțe, situații financiare anuale și raportări către ANAF, la termen și fără surprize.</p>
-            </div>
-            
-            <div className="bg-card p-8 rounded-2xl shadow-soft border border-border/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gold/30">
+            <div className="bg-card p-8 rounded-2xl shadow-soft border border-border/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gold/30 flex flex-col">
               <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6">
                 <ClipboardCheck size={24} strokeWidth={1.5} />
               </div>
-              <h3 className="font-display text-2xl mb-3">Audit financiar</h3>
-              <p className="text-muted-foreground leading-relaxed text-sm">Audit statutar și voluntar al situațiilor financiare, în conformitate cu Standardele Internaționale de Audit.</p>
+              <h3 className="font-display text-2xl mb-3">Audit Statutar</h3>
+              <p className="text-muted-foreground leading-relaxed text-sm mb-4">Obligatoriu pentru entitățile care depășesc 2 din 3 criterii (16 mil lei active, 32 mil lei CA, 50 salariați).</p>
+              <ul className="text-muted-foreground text-sm space-y-2 mt-auto">
+                <li className="flex items-start gap-2"><Check size={16} className="text-gold shrink-0 mt-0.5" /> Verificarea situațiilor financiare</li>
+                <li className="flex items-start gap-2"><Check size={16} className="text-gold shrink-0 mt-0.5" /> Identificarea erorilor sau fraudelor</li>
+                <li className="flex items-start gap-2"><Check size={16} className="text-gold shrink-0 mt-0.5" /> Elaborarea rapoartelor conforme</li>
+              </ul>
             </div>
             
-            <div className="bg-card p-8 rounded-2xl shadow-soft border border-border/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gold/30">
-              <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6">
-                <Users size={24} strokeWidth={1.5} />
-              </div>
-              <h3 className="font-display text-2xl mb-3">Salarizare și HR</h3>
-              <p className="text-muted-foreground leading-relaxed text-sm">Calcul salarii, state de plată, declarația 112, administrare REVISAL și dosare de personal.</p>
-            </div>
-            
-            <div className="bg-card p-8 rounded-2xl shadow-soft border border-border/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gold/30">
-              <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6">
-                <BarChart3 size={24} strokeWidth={1.5} />
-              </div>
-              <h3 className="font-display text-2xl mb-3">Consultanță fiscală</h3>
-              <p className="text-muted-foreground leading-relaxed text-sm">Optimizare fiscală legală, analiza impactului modificărilor legislative și asistență la controale.</p>
-            </div>
-            
-            <div className="bg-card p-8 rounded-2xl shadow-soft border border-border/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gold/30">
-              <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6">
-                <Building2 size={24} strokeWidth={1.5} />
-              </div>
-              <h3 className="font-display text-2xl mb-3">Înființări și restructurări</h3>
-              <p className="text-muted-foreground leading-relaxed text-sm">Consultanță pentru înființare firme, modificări în actul constitutiv, fuziuni, divizări și lichidări.</p>
-            </div>
-            
-            <div className="bg-card p-8 rounded-2xl shadow-soft border border-border/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gold/30">
+            <div className="bg-card p-8 rounded-2xl shadow-soft border border-border/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gold/30 flex flex-col">
               <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6">
                 <ShieldCheck size={24} strokeWidth={1.5} />
               </div>
-              <h3 className="font-display text-2xl mb-3">Due diligence</h3>
-              <p className="text-muted-foreground leading-relaxed text-sm">Analiză financiar-contabilă pre-tranzacție, evaluarea riscurilor și verificarea conformității.</p>
+              <h3 className="font-display text-2xl mb-3">Audit Intern</h3>
+              <p className="text-muted-foreground leading-relaxed text-sm mb-4">Obligatoriu la entitățile supuse auditului statutar.</p>
+              <ul className="text-muted-foreground text-sm space-y-2 mt-auto">
+                <li className="flex items-start gap-2"><Check size={16} className="text-gold shrink-0 mt-0.5" /> Evaluarea proceselor financiare</li>
+                <li className="flex items-start gap-2"><Check size={16} className="text-gold shrink-0 mt-0.5" /> Managementul riscurilor majore</li>
+                <li className="flex items-start gap-2"><Check size={16} className="text-gold shrink-0 mt-0.5" /> Control intern și guvernanță</li>
+              </ul>
+            </div>
+
+            <div className="bg-card p-8 rounded-2xl shadow-soft border border-border/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gold/30 flex flex-col">
+              <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6">
+                <BarChart3 size={24} strokeWidth={1.5} />
+              </div>
+              <h3 className="font-display text-2xl mb-3">Management Financiar</h3>
+              <ul className="text-muted-foreground text-sm space-y-2 mt-auto">
+                <li className="flex items-start gap-2"><Check size={16} className="text-gold shrink-0 mt-0.5" /> Măsurarea performanțelor</li>
+                <li className="flex items-start gap-2"><Check size={16} className="text-gold shrink-0 mt-0.5" /> Monitorizarea obiectivelor</li>
+                <li className="flex items-start gap-2"><Check size={16} className="text-gold shrink-0 mt-0.5" /> Protejarea resurselor</li>
+                <li className="flex items-start gap-2"><Check size={16} className="text-gold shrink-0 mt-0.5" /> Gestionarea inteligentă a datoriei</li>
+              </ul>
+            </div>
+            
+            <div className="bg-card p-8 rounded-2xl shadow-soft border border-border/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gold/30 flex flex-col">
+              <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6">
+                <FileSpreadsheet size={24} strokeWidth={1.5} />
+              </div>
+              <h3 className="font-display text-2xl mb-3">Audit Operațional</h3>
+              <ul className="text-muted-foreground text-sm space-y-2 mt-auto">
+                <li className="flex items-start gap-2"><Check size={16} className="text-gold shrink-0 mt-0.5" /> Analiza eficienței proceselor</li>
+                <li className="flex items-start gap-2"><Check size={16} className="text-gold shrink-0 mt-0.5" /> Oportunități de optimizare</li>
+                <li className="flex items-start gap-2"><Check size={16} className="text-gold shrink-0 mt-0.5" /> Implementarea controalelor</li>
+              </ul>
+            </div>
+            
+            <div className="bg-card p-8 rounded-2xl shadow-soft border border-border/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gold/30 flex flex-col">
+              <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6">
+                <Building2 size={24} strokeWidth={1.5} />
+              </div>
+              <h3 className="font-display text-2xl mb-3">Organizări companii</h3>
+              <p className="text-muted-foreground leading-relaxed text-sm mt-auto">
+                Consultanță și asistență de specialitate pentru proceduri complexe precum fuziuni, lichidări și dizolvări de companii.
+              </p>
+            </div>
+            
+            <div className="bg-card p-8 rounded-2xl shadow-soft border border-border/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gold/30 flex flex-col">
+              <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6">
+                <Users size={24} strokeWidth={1.5} />
+              </div>
+              <h3 className="font-display text-2xl mb-3">Contabilitate</h3>
+              <p className="text-muted-foreground leading-relaxed text-sm mt-auto">
+                Asigurăm o evidență financiar-contabilă completă, transparentă și perfect conformă cu legislația în vigoare.
+              </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Misiune */}
+      <section className="py-20 bg-navy text-navy-foreground border-y border-gold/20 relative overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gold/10 via-navy to-navy pointer-events-none"></div>
+        <div className="max-w-4xl mx-auto px-5 text-center relative z-10">
+          <Quote className="text-gold/50 mx-auto mb-8 transform -scale-x-100" size={48} />
+          <p className="text-2xl md:text-3xl font-display font-light leading-relaxed mb-8">
+            “Contribuim la succesul pe termen lung al organizațiilor, asigurând transparența și conformitatea. Susținem antreprenorii în construirea unui sistem de gestionare eficientă care să le aducă claritate și protecție.”
+          </p>
+          <span className="text-xs uppercase tracking-[0.3em] text-gold font-semibold">Misiunea Noastră</span>
         </div>
       </section>
 
@@ -304,17 +335,17 @@ function Home() {
               </h2>
               <div className="space-y-6 text-foreground/80 leading-relaxed text-lg mb-8">
                 <p>
-                  Sunt <strong>[Nume Placeholder]</strong>, lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
+                  Sunt <strong>Octavia Savu</strong>. Cu peste 12 ani de experiență în poziții de conducere financiară, mi-am construit cariera prin rigoare, viziune strategică și orientare constantă către rezultate. În calitate de director economic, am coordonat funcțiuni financiare complexe și am gestionat bugete de ordinul zecilor de milioane de euro.
                 </p>
                 <p>
-                  Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                  Ulterior, mi-am valorificat experiența executivă în antreprenoriat. Am fost implicată în procese complexe de transformare și redresare financiară, sprijinind companii din multiple industrii în creșterea eficienței, îmbunătățirea controlului financiar și fundamentarea deciziilor de business.
                 </p>
               </div>
               <ul className="space-y-4 mb-8">
                 {[
-                  "Membru al corpului profesional CECCAR și CAFR",
-                  "Expertiză în industrii diverse (IT, producție, comerț)",
-                  "Comunicare fluentă în română și engleză"
+                  "Membru CECCAR, CAFR și ASPAAS",
+                  "Expertiză de management, antreprenoriat și audit",
+                  "Abordare personalizată cu discreție și integritate maximă"
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-4">
                     <div className="mt-1 bg-gold/20 text-gold rounded-full p-1 flex-shrink-0">
@@ -328,11 +359,11 @@ function Home() {
             
             <div className="relative">
               <div className="aspect-[4/5] rounded-3xl overflow-hidden shadow-xl relative z-10 border border-border/50">
-                <img src="/founder.jpg" alt="Ioana Popescu, Expert Contabil și Auditor Financiar" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+                <img src="/founder.jpeg" alt="Octavia Savu, Expert Contabil și Auditor Financiar" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
               </div>
               <div className="absolute -bottom-6 -left-6 bg-surface/90 backdrop-blur-md p-6 rounded-2xl shadow-soft border border-border/60 z-20">
-                <p className="font-display text-2xl text-foreground">[Nume Placeholder]</p>
-                <p className="text-sm text-muted-foreground uppercase tracking-wider font-semibold mt-1">Lorem Ipsum</p>
+                <p className="font-display text-2xl text-foreground">Octavia Savu</p>
+                <p className="text-sm text-muted-foreground uppercase tracking-wider font-semibold mt-1">Expert Contabil & Auditor</p>
               </div>
               {/* Decorative block */}
               <div className="absolute -top-6 -right-6 w-3/4 h-3/4 bg-gradient-to-br from-gold/10 to-primary/5 rounded-3xl -z-10 blur-xl"></div>
@@ -389,71 +420,27 @@ function Home() {
         </div>
       </section>
 
-      {/* Testimoniale */}
-      <section className="py-24 bg-surface">
+      {/* Portofoliu */}
+      <section className="py-24 bg-surface border-t border-border/50">
         <div className="max-w-6xl mx-auto px-5">
           <div className="text-center mb-16">
-            <span className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground block mb-4">Păreri</span>
-            <h2 className="font-display text-4xl md:text-5xl font-normal tracking-[-0.01em] text-foreground">Ce spun clienții</h2>
+            <span className="text-[11px] uppercase tracking-[0.3em] text-muted-foreground block mb-4">Portofoliu</span>
+            <h2 className="font-display text-4xl md:text-5xl font-normal tracking-[-0.01em] text-foreground">Expertiza care ne recomandă</h2>
+            <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
+              Ne mândrim cu faptul că am prestat servicii și am construit parteneriate solide în diverse arii comerciale pentru companii de top.
+            </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-card p-8 rounded-3xl shadow-soft border border-border/60 relative hover:-translate-y-2 transition-all duration-300">
-              <Quote className="absolute top-6 right-6 text-primary/10" size={48} />
-              <div className="flex gap-1 text-gold mb-6">
-                {[...Array(5)].map((_, i) => <Star key={i} size={16} fill="currentColor" />)}
+          <div className="flex flex-wrap justify-center gap-4">
+            {[
+              "Delta Studio", "Gebruder Weiss", "Medicover", "Synevo Romania", 
+              "Sud Oil", "Meta Management Team", "Exe Software", "Biofarm SA", 
+              "West Gate", "Novo Parc Trei", "Creditreform Romania", "IFN Imprumut SA", "Terramob Art Design"
+            ].map((client, i) => (
+              <div key={i} className="bg-background px-6 py-4 rounded-full shadow-soft border border-border/60 hover:-translate-y-1 transition-all duration-300 hover:border-gold/50 hover:shadow-md font-medium text-foreground text-sm cursor-default">
+                {client}
               </div>
-              <p className="text-foreground/80 leading-relaxed mb-8 italic">
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam."
-              </p>
-              <div className="flex items-center gap-4 mt-auto">
-                <div className="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold">
-                  NL
-                </div>
-                <div>
-                  <p className="font-medium text-foreground">Nume Lorem</p>
-                  <p className="text-xs text-muted-foreground">CEO, Ipsum SRL</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="bg-card p-8 rounded-3xl shadow-soft border border-border/60 relative hover:-translate-y-2 transition-all duration-300">
-              <Quote className="absolute top-6 right-6 text-primary/10" size={48} />
-              <div className="flex gap-1 text-gold mb-6">
-                {[...Array(5)].map((_, i) => <Star key={i} size={16} fill="currentColor" />)}
-              </div>
-              <p className="text-foreground/80 leading-relaxed mb-8 italic">
-                "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident."
-              </p>
-              <div className="flex items-center gap-4 mt-auto">
-                <div className="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold">
-                  IL
-                </div>
-                <div>
-                  <p className="font-medium text-foreground">Ipsum Lorem</p>
-                  <p className="text-xs text-muted-foreground">Fondator, DolorSit</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="bg-card p-8 rounded-3xl shadow-soft border border-border/60 relative hover:-translate-y-2 transition-all duration-300">
-              <Quote className="absolute top-6 right-6 text-primary/10" size={48} />
-              <div className="flex gap-1 text-gold mb-6">
-                {[...Array(5)].map((_, i) => <Star key={i} size={16} fill="currentColor" />)}
-              </div>
-              <p className="text-foreground/80 leading-relaxed mb-8 italic">
-                "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore."
-              </p>
-              <div className="flex items-center gap-4 mt-auto">
-                <div className="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold">
-                  DL
-                </div>
-                <div>
-                  <p className="font-medium text-foreground">Dolor Lorem</p>
-                  <p className="text-xs text-muted-foreground">Director, Amet Inc</p>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -478,7 +465,8 @@ function Home() {
                 </div>
                 <div>
                   <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-2">Adresă</p>
-                  <p className="text-xl font-medium text-foreground">București, România</p>
+                  <p className="text-xl font-medium text-foreground">H Private Arghezi</p>
+                  <p className="text-foreground/70 mt-1">Strada Tudor Arghezi 21, 020943 București</p>
                 </div>
               </div>
             </div>
