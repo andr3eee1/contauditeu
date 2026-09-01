@@ -562,7 +562,7 @@ function Home() {
           <div className="flex flex-col md:flex-row items-center md:justify-end gap-6 w-full text-sm text-muted-foreground mt-4 md:mt-0">
             <div className="flex flex-col items-center md:items-start gap-1">
               <p>&copy; {currentYear} Contaudit. Toate drepturile rezervate.</p>
-              <p>Dezvoltat cu ❤️ de <a href="https://andrei.pana.com.ro" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors font-medium">Andrei</a></p>
+              <p>Platformă digitală dezvoltată de <a href="https://andrei.pana.com.ro" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors font-medium">Andrei</a></p>
             </div>
             <div className="hidden md:block w-px h-8 bg-border"></div>
             <Link to="/confidentialitate" className="hover:text-foreground transition-colors">
