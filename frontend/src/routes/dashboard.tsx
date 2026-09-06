@@ -19,7 +19,8 @@ function Dashboard() {
   const [loadingData, setLoadingData] = useState(false)
   
   // Upload states
-  const [selectedClient, setSelectedClient] = useState('')
+  const [uploadModalOpen, setUploadModalOpen] = useState(false)
+  const [selectedClientForUpload, setSelectedClientForUpload] = useState<any>(null)
   const [file, setFile] = useState<File | null>(null)
   const [uploading, setUploading] = useState(false)
   const [toast, setToast] = useState<{msg: string, type: 'success' | 'error'} | null>(null)
@@ -97,9 +98,8 @@ function Dashboard() {
     setTimeout(() => setToast(null), 4000)
   }
 
-  const handleUpload = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!file || !selectedClient) return
+  const handleUpload = async (clientId: string) => {
+    if (!file || !clientId) return
     
     setUploading(true)
     const formData = new FormData()
@@ -109,7 +109,7 @@ function Dashboard() {
     const token = localStorage.getItem('contaudit_token')
     
     try {
-      const res = await fetch(`/api/admin/documents/${selectedClient}`, {
+      const res = await fetch(`/api/admin/documents/${clientId}`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -120,6 +120,7 @@ function Dashboard() {
       if (res.ok) {
         showToast('Document încărcat cu succes!', 'success')
         setFile(null)
+        setUploadModalOpen(false)
         if (fileInputRef.current) fileInputRef.current.value = ''
       } else {
         const error = await res.json()
@@ -251,53 +252,57 @@ function Dashboard() {
               <div className="flex items-center justify-between mb-8">
                 <div>
                   <h2 className="font-display text-3xl font-medium text-foreground">Management Clienți</h2>
-                  <p className="text-muted-foreground mt-1">Selectați un client pentru a încărca documente securizate.</p>
+                  <p className="text-muted-foreground mt-1">Selectați un client din tabel pentru a-i încărca documente securizate.</p>
                 </div>
               </div>
 
-              {/* Upload Form */}
-              <div className="bg-background border border-border/60 rounded-3xl p-6 shadow-soft mb-8">
-                <h3 className="font-medium text-lg mb-4 flex items-center gap-2">
-                  <UploadCloud size={20} className="text-primary" />
-                  Încărcare Document Nou
-                </h3>
-                <form onSubmit={handleUpload} className="flex flex-col md:flex-row gap-4 items-end">
-                  <div className="w-full md:w-1/3">
-                    <label className="block text-sm font-medium text-muted-foreground mb-2 ml-1">Selectați Clientul</label>
-                    <select 
-                      required
-                      value={selectedClient}
-                      onChange={(e) => setSelectedClient(e.target.value)}
-                      className="w-full h-11 px-4 rounded-xl border border-input bg-surface text-sm focus:outline-none focus:ring-2 focus:ring-gold/50"
+              {/* Upload Modal */}
+              {uploadModalOpen && selectedClientForUpload && (
+                <div className="fixed inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200">
+                  <div className="bg-surface border border-border/60 rounded-3xl p-8 w-full max-w-md shadow-2xl relative">
+                    <button 
+                      onClick={() => { setUploadModalOpen(false); setFile(null); }}
+                      className="absolute top-6 right-6 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
                     >
-                      <option value="" disabled>Alegeți un client...</option>
-                      {clients.filter(c => c.role !== 'ADMIN').map(c => (
-                        <option key={c.id} value={c.id}>{c.name} ({c.email})</option>
-                      ))}
-                    </select>
-                  </div>
-                  
-                  <div className="w-full md:w-1/3">
-                    <label className="block text-sm font-medium text-muted-foreground mb-2 ml-1">Fișier (PDF, Excel)</label>
-                    <input 
-                      ref={fileInputRef}
-                      type="file" 
-                      required
-                      onChange={(e) => setFile(e.target.files?.[0] || null)}
-                      className="w-full text-sm text-muted-foreground file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 transition-colors"
-                    />
-                  </div>
+                      <XCircle size={24} />
+                    </button>
+                    
+                    <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-6">
+                      <UploadCloud size={24} />
+                    </div>
+                    
+                    <h3 className="font-display text-2xl font-medium mb-2">Încărcare Document</h3>
+                    <p className="text-muted-foreground text-sm mb-6">
+                      Pentru clientul: <strong className="text-foreground">{selectedClientForUpload.name}</strong>
+                    </p>
 
-                  <button 
-                    type="submit" 
-                    disabled={uploading}
-                    className="w-full md:w-auto h-11 px-8 rounded-xl bg-navy text-navy-foreground font-medium hover:bg-navy/90 hover:shadow-lg transition-all disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                  >
-                    {uploading ? <Loader2 size={16} className="animate-spin" /> : <UploadCloud size={16} />}
-                    {uploading ? 'Se încarcă...' : 'Încărcare'}
-                  </button>
-                </form>
-              </div>
+                    <form onSubmit={(e) => {
+                      e.preventDefault();
+                      handleUpload(selectedClientForUpload.id);
+                    }} className="space-y-6">
+                      <div>
+                        <label className="block text-sm font-medium text-muted-foreground mb-3 ml-1">Selectați Fișierul (PDF, Excel)</label>
+                        <input 
+                          ref={fileInputRef}
+                          type="file" 
+                          required
+                          onChange={(e) => setFile(e.target.files?.[0] || null)}
+                          className="w-full text-sm text-muted-foreground file:mr-4 file:py-3 file:px-6 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 transition-colors bg-background border border-border/50 rounded-xl p-2"
+                        />
+                      </div>
+
+                      <button 
+                        type="submit" 
+                        disabled={uploading}
+                        className="w-full h-12 rounded-xl bg-navy text-navy-foreground font-medium hover:bg-navy/90 hover:shadow-[0_8px_20px_rgba(26,35,64,0.25)] transition-all hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
+                      >
+                        {uploading ? <Loader2 size={18} className="animate-spin" /> : <UploadCloud size={18} />}
+                        {uploading ? 'Se încarcă securizat...' : 'Confirmă Încărcarea'}
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              )}
 
               {/* Client List */}
               <div className="bg-background border border-border/60 rounded-3xl overflow-hidden shadow-soft">
@@ -307,13 +312,14 @@ function Dashboard() {
                       <th className="p-4 font-medium">Nume Client</th>
                       <th className="p-4 font-medium">Email</th>
                       <th className="p-4 font-medium">Data Înregistrării</th>
+                      <th className="p-4 font-medium text-right">Acțiuni</th>
                     </tr>
                   </thead>
                   <tbody>
                     {loadingData ? (
-                      <tr><td colSpan={3} className="p-8 text-center text-muted-foreground"><Loader2 className="animate-spin mx-auto" /></td></tr>
+                      <tr><td colSpan={4} className="p-8 text-center text-muted-foreground"><Loader2 className="animate-spin mx-auto" /></td></tr>
                     ) : clients.filter(c => c.role !== 'ADMIN').length === 0 ? (
-                      <tr><td colSpan={3} className="p-8 text-center text-muted-foreground">Niciun client înregistrat.</td></tr>
+                      <tr><td colSpan={4} className="p-8 text-center text-muted-foreground">Niciun client înregistrat.</td></tr>
                     ) : (
                       clients.filter(c => c.role !== 'ADMIN').map((client) => (
                         <tr key={client.id} className="border-b border-border/50 hover:bg-surface/50 transition-colors">
@@ -325,6 +331,18 @@ function Dashboard() {
                           </td>
                           <td className="p-4 text-sm text-muted-foreground">{client.email}</td>
                           <td className="p-4 text-sm text-muted-foreground">{new Date(client.createdAt).toLocaleDateString('ro-RO')}</td>
+                          <td className="p-4 text-right">
+                            <button 
+                              onClick={() => {
+                                setSelectedClientForUpload(client)
+                                setUploadModalOpen(true)
+                              }}
+                              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-navy/5 text-navy hover:bg-navy/10 font-medium text-sm transition-colors cursor-pointer"
+                            >
+                              <UploadCloud size={16} />
+                              Încarcă
+                            </button>
+                          </td>
                         </tr>
                       ))
                     )}

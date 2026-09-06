@@ -128,7 +128,7 @@ function Home() {
             </div>
             
             <button 
-              className="md:hidden flex items-center justify-center p-2 -mr-2 text-foreground z-50"
+              className="md:hidden flex items-center justify-center p-3 -mr-3 text-foreground z-50"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle menu"
             >
@@ -159,7 +159,7 @@ function Home() {
       {/* Hero */}
       <section className="relative bg-navy text-navy-foreground overflow-hidden pt-16 md:pt-24 pb-20 md:pb-32">
         <div className="absolute inset-0 opacity-25">
-          <img src="/hero-office.jpg" alt="Firmă de contabilitate și audit financiar - Birou profesional" className="w-full h-full object-cover" />
+          <img src="/hero-office.jpg" alt="Firmă de contabilitate și audit financiar - Birou profesional" fetchPriority="high" width="1920" height="1080" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-navy/60 mix-blend-multiply"></div>
         </div>
         
@@ -213,16 +213,25 @@ function Home() {
             <img 
               src="/sigla-ceccar.png" 
               alt="CECCAR Logo" 
+              loading="lazy"
+              width="200"
+              height="100"
               className="h-20 md:h-28 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 mix-blend-multiply" 
             />
             <img 
               src="/ca.png" 
               alt="CAFR Logo" 
+              loading="lazy"
+              width="200"
+              height="100"
               className="h-14 md:h-20 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 mix-blend-multiply" 
             />
             <img 
               src="/ASPAAS-logo.png" 
               alt="ASPAAS Logo" 
+              loading="lazy"
+              width="200"
+              height="100"
               className="h-10 md:h-14 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300 mix-blend-multiply" 
             />
           </div>
@@ -349,7 +358,7 @@ function Home() {
             
             <div className="relative">
               <div className="aspect-[4/5] rounded-3xl overflow-hidden shadow-xl relative z-10 border border-border/50">
-                <img src="/founder.jpeg" alt="Octavia Savu, Expert Contabil și Auditor Financiar" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+                <img src="/founder.jpeg" loading="lazy" width="800" height="1000" alt="Octavia Savu, Expert Contabil și Auditor Financiar" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
               </div>
               <div className="absolute -bottom-6 -left-6 bg-surface/90 backdrop-blur-md p-6 rounded-2xl shadow-soft border border-border/60 z-20">
                 <p className="font-display text-2xl text-foreground">Octavia Savu</p>

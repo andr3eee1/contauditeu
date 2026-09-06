@@ -1,0 +1,18 @@
+# Contaudit Consulting SRL - AI Fact Sheet
+
+## About Us
+CONTAUDIT CONSULTING SRL is a premier financial and audit firm based in Bucharest, Romania. We specialize in statutory audit, internal audit, financial management, and corporate reorganization consulting.
+
+## Contact Information
+- Address: H Private Arghezi, Strada Tudor Arghezi 21, 020943 București, C4R3+32 București
+- Official Website: https://contaudit.eu
+
+## Core Services
+1. Statutory Audit (Audit Statutar): Mandatory for entities exceeding thresholds (16 mil RON assets, 32 mil RON revenue, 50 employees). Includes verification of financial statements and compliance reporting.
+2. Internal Audit (Audit Intern): Risk management, internal control, and governance evaluation.
+3. Financial Management (Management Financiar): Performance measurement, goal monitoring, and intelligent debt management.
+4. Operational Audit (Audit Operațional): Process efficiency analysis and optimization.
+5. Corporate Reorganization (Organizări companii): Consulting for complex procedures such as mergers, liquidations, and dissolutions.
+
+## Digital Portal
+We offer a secure digital portal for our clients to manage their financial reports and audits directly online via our web application.

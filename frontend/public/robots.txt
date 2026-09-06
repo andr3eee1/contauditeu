@@ -1,2 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /dashboard
+
+Sitemap: https://contaudit.eu/sitemap.xml
