@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { HeadContent, Scripts, createRootRoute, Link } from '@tanstack/react-router'
 import { FileQuestion, AlertTriangle, Home, ArrowLeft } from 'lucide-react'
+import { AuthProvider } from '../auth'
 
 import appCss from '../styles.css?url'
 
@@ -137,7 +138,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
         <Scripts />
       </body>
     </html>

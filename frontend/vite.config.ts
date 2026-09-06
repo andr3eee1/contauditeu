@@ -8,6 +8,14 @@ import viteReact from '@vitejs/plugin-react'
 const config = defineConfig({
   resolve: { tsconfigPaths: true },
   plugins: [tanstackStart(), tailwindcss(), viteReact()],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8080',
+        changeOrigin: true
+      }
+    }
+  },
   preview: {
     allowedHosts: true,
   }

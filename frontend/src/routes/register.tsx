@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { ArrowRight, Lock, Mail, User, Loader2 } from 'lucide-react'
+import { useAuth } from '../auth'
 
 export const Route = createFileRoute('/register')({
   component: Register,
@@ -8,12 +9,13 @@ export const Route = createFileRoute('/register')({
 
 function Register() {
   const navigate = useNavigate()
+  const auth = useAuth()
   
   useEffect(() => {
-    if (localStorage.getItem('token') && localStorage.getItem('user')) {
+    if (auth.isAuthenticated) {
       navigate({ to: '/dashboard', replace: true })
     }
-  }, [navigate])
+  }, [auth.isAuthenticated, navigate])
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -27,7 +29,7 @@ function Register() {
     setError('')
     
     try {
-      const res = await fetch('http://localhost:8080/api/auth/register', {
+      const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, password })
@@ -40,7 +42,7 @@ function Register() {
       }
       
       // Auto-login after register
-      const loginRes = await fetch('http://localhost:8080/api/auth/login', {
+      const loginRes = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -49,8 +51,7 @@ function Register() {
       const loginData = await loginRes.json()
       
       if (loginRes.ok) {
-        localStorage.setItem('token', loginData.token)
-        localStorage.setItem('user', JSON.stringify(loginData.user))
+        auth.login(loginData.token, loginData.user)
         navigate({ to: '/dashboard' })
       } else {
         navigate({ to: '/login' })

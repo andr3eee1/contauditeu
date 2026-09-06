@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { ArrowRight, Lock, Mail, Loader2 } from 'lucide-react'
+import { useAuth } from '../auth'
 
 export const Route = createFileRoute('/login')({
   component: Login,
@@ -8,12 +9,13 @@ export const Route = createFileRoute('/login')({
 
 function Login() {
   const navigate = useNavigate()
+  const auth = useAuth()
   
   useEffect(() => {
-    if (localStorage.getItem('token') && localStorage.getItem('user')) {
+    if (auth.isAuthenticated) {
       navigate({ to: '/dashboard', replace: true })
     }
-  }, [navigate])
+  }, [auth.isAuthenticated, navigate])
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -26,7 +28,7 @@ function Login() {
     setError('')
     
     try {
-      const res = await fetch('http://localhost:8080/api/auth/login', {
+      const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -38,8 +40,7 @@ function Login() {
         throw new Error(data.error || 'Autentificare eșuată')
       }
       
-      localStorage.setItem('token', data.token)
-      localStorage.setItem('user', JSON.stringify(data.user))
+      auth.login(data.token, data.user)
       
       navigate({ to: '/dashboard' })
     } catch (err: any) {
