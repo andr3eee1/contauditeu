@@ -18,11 +18,11 @@ import {
 export const Route = createFileRoute('/')({
   head: () => ({
     meta: [
-      { title: 'Firmă de Contabilitate, Audit și Management Financiar | Contaudit' },
-      { name: 'description', content: 'CONTAUDIT CONSULTING SRL: Servicii complete de expertiză contabilă, audit statutar, audit intern și management financiar în București. Experiență de peste 10 ani.' },
-      { name: 'keywords', content: 'firma contabilitate Bucuresti, audit statutar, audit intern, expert contabil, management financiar, servicii audit, consultanta fiscala, reorganizare companii, Octavia Savu' },
-      { property: 'og:title', content: 'Firmă de Contabilitate și Audit Financiar | Contaudit' },
-      { property: 'og:description', content: 'CONTAUDIT CONSULTING SRL oferă servicii de contabilitate, audit statutar și voluntar, livrate cu rigoare și transparență.' },
+      { title: 'Firmă de Audit și Management Financiar | Contaudit' },
+      { name: 'description', content: 'CONTAUDIT CONSULTING SRL: Servicii complete de audit statutar, audit intern, management financiar și consultanță în București. Experiență de peste 10 ani.' },
+      { name: 'keywords', content: 'audit statutar, audit intern, management financiar, servicii audit, consultanta fiscala, reorganizare companii, Octavia Savu' },
+      { property: 'og:title', content: 'Firmă de Audit Financiar și Consultanță | Contaudit' },
+      { property: 'og:description', content: 'CONTAUDIT CONSULTING SRL oferă servicii de audit statutar și voluntar, livrate cu rigoare și transparență.' },
       { property: 'og:url', content: 'https://contaudit.eu/' },
       { property: 'og:type', content: 'website' },
     ],
@@ -166,13 +166,13 @@ function Home() {
         <div className="relative max-w-6xl mx-auto px-5 z-10">
           <div className="max-w-3xl">
             <span className="text-[11px] uppercase tracking-[0.3em] text-gold font-semibold mb-6 block">
-              Contabilitate · Audit · Fiscalitate
+              Audit · Management Financiar · Fiscalitate
             </span>
             <h1 className="font-display text-5xl md:text-7xl mb-6 font-normal tracking-[-0.01em] leading-[1.1]">
-              Firmă de Contabilitate și Audit Financiar cu Experiență.
+              Firmă de Audit Financiar și Consultanță cu Experiență.
             </h1>
             <p className="text-lg md:text-xl text-navy-foreground/80 mb-10 max-w-2xl font-light">
-              CONTAUDIT CONSULTING SRL este o societate specializată în servicii de contabilitate, management financiar, audit statutar și intern. Cifre corecte pentru decizii sigure.
+              CONTAUDIT CONSULTING SRL este o societate specializată în management financiar, audit statutar, intern și operațional. Cifre corecte pentru decizii sigure.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 mb-16">
@@ -296,16 +296,6 @@ function Home() {
               <h3 className="font-display text-2xl mb-3">Organizări companii</h3>
               <p className="text-muted-foreground leading-relaxed text-sm mt-auto">
                 Consultanță și asistență de specialitate pentru proceduri complexe precum fuziuni, lichidări și dizolvări de companii.
-              </p>
-            </div>
-            
-            <div className="bg-card p-8 rounded-2xl shadow-soft border border-border/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gold/30 flex flex-col">
-              <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6">
-                <Users size={24} strokeWidth={1.5} />
-              </div>
-              <h3 className="font-display text-2xl mb-3">Contabilitate</h3>
-              <p className="text-muted-foreground leading-relaxed text-sm mt-auto">
-                Asigurăm o evidență financiar-contabilă completă, transparentă și perfect conformă cu legislația în vigoare.
               </p>
             </div>
           </div>
