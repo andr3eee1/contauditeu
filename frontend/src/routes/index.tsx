@@ -237,8 +237,8 @@ function Home() {
             <h2 className="font-display text-4xl md:text-5xl font-normal tracking-[-0.01em] text-foreground">Soluții financiare complete</h2>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-card p-8 rounded-2xl shadow-soft border border-border/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gold/30 flex flex-col">
+          <div className="flex flex-wrap justify-center gap-6">
+            <div className="w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] bg-card p-8 rounded-2xl shadow-soft border border-border/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gold/30 flex flex-col">
               <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6">
                 <ClipboardCheck size={24} strokeWidth={1.5} />
               </div>
@@ -251,7 +251,7 @@ function Home() {
               </ul>
             </div>
             
-            <div className="bg-card p-8 rounded-2xl shadow-soft border border-border/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gold/30 flex flex-col">
+            <div className="w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] bg-card p-8 rounded-2xl shadow-soft border border-border/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gold/30 flex flex-col">
               <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6">
                 <ShieldCheck size={24} strokeWidth={1.5} />
               </div>
@@ -264,7 +264,7 @@ function Home() {
               </ul>
             </div>
 
-            <div className="bg-card p-8 rounded-2xl shadow-soft border border-border/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gold/30 flex flex-col">
+            <div className="w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] bg-card p-8 rounded-2xl shadow-soft border border-border/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gold/30 flex flex-col">
               <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6">
                 <BarChart3 size={24} strokeWidth={1.5} />
               </div>
@@ -277,7 +277,7 @@ function Home() {
               </ul>
             </div>
             
-            <div className="bg-card p-8 rounded-2xl shadow-soft border border-border/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gold/30 flex flex-col">
+            <div className="w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] bg-card p-8 rounded-2xl shadow-soft border border-border/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gold/30 flex flex-col">
               <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6">
                 <FileSpreadsheet size={24} strokeWidth={1.5} />
               </div>
@@ -289,7 +289,7 @@ function Home() {
               </ul>
             </div>
             
-            <div className="bg-card p-8 rounded-2xl shadow-soft border border-border/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gold/30 flex flex-col">
+            <div className="w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] bg-card p-8 rounded-2xl shadow-soft border border-border/60 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-gold/30 flex flex-col">
               <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6">
                 <Building2 size={24} strokeWidth={1.5} />
               </div>
