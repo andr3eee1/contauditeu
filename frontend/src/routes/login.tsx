@@ -111,6 +111,11 @@ function Login() {
                   placeholder="••••••••"
                 />
               </div>
+              <div className="flex justify-end mt-2">
+                <Link to="/forgot-password" className="text-xs font-medium text-muted-foreground hover:text-navy transition-colors">
+                  Ai uitat parola?
+                </Link>
+              </div>
             </div>
 
             <button 

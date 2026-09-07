@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { getEmailTemplate } from './emailTemplate.js';
 import { PrismaClient } from '@prisma/client';
 import multer from 'multer';
 import fs from 'fs';
@@ -84,14 +85,14 @@ app.post('/api/auth/register', async (req, res) => {
         await transporter.sendMail({
           from: `"Contaudit" <${process.env.SMTP_USER}>`,
           to: email,
-          subject: 'Verifică adresa de email - Contaudit',
-          html: `
-            <h3>Salut, ${name}!</h3>
-            <p>Îți mulțumim pentru înregistrarea pe platforma Contaudit.</p>
-            <p>Pentru a activa contul, te rugăm să dai click pe linkul de mai jos:</p>
-            <a href="${verifyLink}" style="display:inline-block;padding:10px 20px;background-color:#1a2340;color:#ffffff;text-decoration:none;border-radius:5px;">Verifică Contul</a>
-            <p>Dacă nu ai solicitat crearea unui cont, poți ignora acest mesaj.</p>
-          `,
+          subject: 'Activare Cont - Contaudit',
+          html: getEmailTemplate(
+            'Activare Cont',
+            'Activează-ți noul cont pe platforma Contaudit',
+            `<h1>Salut, ${name}!</h1><p>Bine ai venit pe platforma <strong>Contaudit</strong>. Pentru a putea accesa documentele tale și a interacționa cu echipa noastră, te rugăm să îți activezi contul dând click pe butonul de mai jos.</p>`,
+            'Activează Contul',
+            verifyLink
+          )
         });
       } catch (mailError) {
         console.error('Failed to send verification email:', mailError);
@@ -182,13 +183,13 @@ app.post('/api/auth/resend-verification', async (req, res) => {
       from: `"Contaudit" <${process.env.SMTP_USER}>`,
       to: email,
       subject: 'Verifică adresa de email - Contaudit',
-      html: `
-        <h3>Salut, ${user.name}!</h3>
-        <p>Ai solicitat retransmiterea linkului de activare pentru platforma Contaudit.</p>
-        <p>Pentru a activa contul, te rugăm să dai click pe linkul de mai jos:</p>
-        <a href="${verifyLink}" style="display:inline-block;padding:10px 20px;background-color:#1a2340;color:#ffffff;text-decoration:none;border-radius:5px;">Verifică Contul</a>
-        <p>Dacă nu ai solicitat crearea unui cont, poți ignora acest mesaj.</p>
-      `,
+      html: getEmailTemplate(
+        'Verificare Email',
+        'Retrimitere link de activare cont',
+        `<h1>Salut, ${user.name}!</h1><p>Ai solicitat retransmiterea linkului de activare pentru platforma <strong>Contaudit</strong>.</p><p>Pentru a-ți activa contul, te rugăm să dai click pe butonul de mai jos:</p>`,
+        'Verifică Contul',
+        verifyLink
+      )
     });
 
     res.json({ message: 'Email de verificare retrimis cu succes!' });
@@ -198,7 +199,85 @@ app.post('/api/auth/resend-verification', async (req, res) => {
   }
 });
 
+
+
+app.post('/api/auth/forgot-password', async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) return res.status(400).json({ error: 'Email este necesar' });
+
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) {
+      // Return success anyway for security
+      return res.json({ message: 'Dacă contul există, vei primi un email de resetare.' });
+    }
+
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    const resetExpires = new Date(Date.now() + 3600000); // 1 hour from now
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { resetPasswordToken: resetToken, resetPasswordExpires: resetExpires }
+    });
+
+    const resetLink = `https://contaudit.eu/reset-password?token=${resetToken}`;
+    
+    await transporter.sendMail({
+      from: `"Contaudit" <${process.env.SMTP_USER}>`,
+      to: email,
+      subject: 'Resetare Parolă - Contaudit',
+      html: getEmailTemplate(
+        'Resetare Parolă',
+        'Ai solicitat resetarea parolei pentru contul tău.',
+        `<h1>Salut, ${user.name}!</h1><p>Am primit o cerere pentru resetarea parolei contului tău de pe platforma <strong>Contaudit</strong>.</p><p>Acest link este valabil timp de <strong>1 oră</strong>.</p>`,
+        'Resetează Parola',
+        resetLink
+      )
+    });
+
+    res.json({ message: 'Dacă contul există, vei primi un email de resetare.' });
+  } catch (error) {
+    console.error('Forgot password error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.post('/api/auth/reset-password', async (req, res) => {
+  try {
+    const { token, newPassword } = req.body;
+    if (!token || !newPassword) return res.status(400).json({ error: 'Token și parolă nouă necesare' });
+
+    const user = await prisma.user.findFirst({
+      where: { 
+        resetPasswordToken: token,
+        resetPasswordExpires: { gt: new Date() } // Must not be expired
+      }
+    });
+
+    if (!user) {
+      return res.status(400).json({ error: 'Link invalid sau expirat.' });
+    }
+
+    const passwordHash = await bcrypt.hash(newPassword, 10);
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { 
+        passwordHash,
+        resetPasswordToken: null,
+        resetPasswordExpires: null
+      }
+    });
+
+    res.json({ message: 'Parola a fost resetată cu succes!' });
+  } catch (error) {
+    console.error('Reset password error:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 // --- MIDDLEWARES --- //
+
 
 const authenticate = (req: any, res: any, next: any) => {
   const authHeader = req.headers.authorization;
