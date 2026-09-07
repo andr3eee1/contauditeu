@@ -3,7 +3,7 @@ import { HeadContent, Scripts, createRootRoute, Link } from '@tanstack/react-rou
 import { FileQuestion, AlertTriangle, Home, ArrowLeft } from 'lucide-react'
 import { AuthProvider } from '../auth'
 
-import appCss from '../styles.css?url'
+import appCss from '../styles.css?inline'
 
 export const Route = createRootRoute({
   head: () => ({
@@ -18,7 +18,6 @@ export const Route = createRootRoute({
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
-      { rel: "stylesheet", href: appCss },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
   }),
@@ -133,9 +132,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     <html lang="ro" className="scroll-pt-24">
       <head>
         <HeadContent />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <style dangerouslySetInnerHTML={{ __html: appCss }} />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
       </head>
       <body>
         <AuthProvider>
