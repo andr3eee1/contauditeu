@@ -5,6 +5,7 @@ export interface User {
   name: string;
   email: string;
   role: 'ADMIN' | 'CLIENT';
+  isVerified?: boolean;
 }
 
 export interface AuthContextType {
@@ -12,6 +13,7 @@ export interface AuthContextType {
   user: User | null;
   login: (token: string, user: User) => void;
   logout: () => void;
+  updateUser: (user: User) => void;
 }
 
 const AuthContext = React.createContext<AuthContextType | null>(null);
@@ -43,8 +45,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(null);
   }, []);
 
+  const updateUser = React.useCallback((updatedUser: User) => {
+    localStorage.setItem('contaudit_user', JSON.stringify(updatedUser));
+    setUser(updatedUser);
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated: !!user, user, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated: !!user, user, login, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

@@ -23,8 +23,6 @@ function Register() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const [successMessage, setSuccessMessage] = useState('')
-
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
@@ -43,37 +41,27 @@ function Register() {
         throw new Error(data.error || 'Înregistrare eșuată')
       }
       
-      setSuccessMessage('Contul a fost creat cu succes! Te rugăm să îți verifici adresa de email (inclusiv folderul Spam) pentru a-l activa.')
+      // Auto-login after register
+      const loginRes = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      })
+      
+      const loginData = await loginRes.json()
+      
+      if (loginRes.ok) {
+        auth.login(loginData.token, loginData.user)
+        navigate({ to: '/dashboard' })
+      } else {
+        navigate({ to: '/login' })
+      }
       
     } catch (err: any) {
       setError(err.message)
     } finally {
       setLoading(false)
     }
-  }
-
-  if (successMessage) {
-    return (
-      <div className="min-h-screen bg-surface flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <Link to="/" className="text-2xl font-display font-medium text-navy text-center block mb-8">
-            CONTAUDIT
-          </Link>
-          <div className="bg-background/80 backdrop-blur-xl py-8 px-4 shadow-xl border border-border/50 rounded-3xl sm:px-10 text-center">
-            <div className="w-16 h-16 bg-gold/10 text-gold rounded-full flex items-center justify-center mx-auto mb-4">
-              <Mail size={32} />
-            </div>
-            <h2 className="text-2xl font-medium text-foreground mb-4">Verifică-ți Email-ul</h2>
-            <p className="text-muted-foreground mb-8">
-              {successMessage}
-            </p>
-            <Link to="/login" className="text-sm font-medium text-primary hover:text-gold transition-colors">
-              Mergi la pagina de login &rarr;
-            </Link>
-          </div>
-        </div>
-      </div>
-    )
   }
 
   return (

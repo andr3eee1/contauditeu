@@ -10,7 +10,7 @@ export const Route = createFileRoute('/dashboard')({
 
 function Dashboard() {
   const navigate = useNavigate()
-  const { user, isAuthenticated, logout } = useAuth()
+  const { user, isAuthenticated, logout, updateUser } = useAuth()
   const [activeTab, setActiveTab] = useState<'overview' | 'clients' | 'documents'>('overview')
   
   // Data states
@@ -33,10 +33,27 @@ function Dashboard() {
       return
     }
     
+    const token = localStorage.getItem('contaudit_token')
+
+    // Sync user state to check if they verified their email on another device
+    const syncUser = async () => {
+      try {
+        const res = await fetch('/api/auth/me', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        })
+        if (res.ok) {
+          const updatedUser = await res.json()
+          if (updatedUser.isVerified !== user?.isVerified) {
+            updateUser(updatedUser)
+          }
+        }
+      } catch (e) {}
+    }
+    syncUser()
+
     // Fetch data based on role
     const fetchData = async () => {
       setLoadingData(true)
-      const token = localStorage.getItem('contaudit_token')
       try {
         if (user?.role === 'ADMIN') {
           // Fetch clients
@@ -133,10 +150,62 @@ function Dashboard() {
     }
   }
 
+  const [resending, setResending] = useState(false)
+  const [resendMsg, setResendMsg] = useState('')
+
+  const handleResend = async () => {
+    if (!user?.email) return
+    setResending(true)
+    try {
+      const res = await fetch('/api/auth/resend-verification', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: user.email })
+      })
+      const data = await res.json()
+      setResendMsg(data.message || data.error)
+    } catch(e) {
+      setResendMsg('Eroare la retrimitere')
+    }
+    setResending(false)
+  }
+
   if (!user) {
     return (
       <div className="min-h-screen bg-surface flex flex-col items-center justify-center p-4">
         <Loader2 size={40} className="animate-spin text-gold mb-4" />
+      </div>
+    )
+  }
+
+  if (!user.isVerified) {
+    return (
+      <div className="min-h-screen bg-surface flex flex-col items-center justify-center p-4">
+        <div className="bg-background/80 backdrop-blur-xl p-8 shadow-xl border border-border/50 rounded-3xl text-center max-w-md w-full">
+          <div className="w-16 h-16 bg-gold/10 text-gold rounded-full flex items-center justify-center mx-auto mb-4">
+            <CheckCircle size={32} />
+          </div>
+          <h2 className="text-2xl font-medium text-foreground mb-4">Verificare Necesară</h2>
+          <p className="text-muted-foreground mb-6">
+            Contul tău nu este încă activat. Te rugăm să verifici adresa de email (<strong>{user.email}</strong>) și să dai click pe linkul primit.
+          </p>
+          <button 
+            onClick={handleResend} 
+            disabled={resending}
+            className="w-full mb-4 inline-flex items-center justify-center gap-2 rounded-full bg-navy px-4 py-3 text-sm font-medium text-white hover:bg-navy/90 disabled:opacity-50 transition-all"
+          >
+            {resending ? <Loader2 className="animate-spin" size={18} /> : null}
+            Retrimite Email de Verificare
+          </button>
+          
+          {resendMsg && (
+            <p className="text-sm font-medium text-gold mb-4 bg-gold/10 p-2 rounded-lg">{resendMsg}</p>
+          )}
+
+          <button onClick={logout} className="text-sm text-muted-foreground hover:text-foreground underline">
+            Delogare
+          </button>
+        </div>
       </div>
     )
   }

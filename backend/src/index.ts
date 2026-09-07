@@ -115,18 +115,14 @@ app.post('/api/auth/login', async (req, res) => {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    if (!user.isVerified) {
-      return res.status(403).json({ error: 'Contul nu este activat. Te rugăm să îți verifici email-ul.' });
-    }
-
     const isValid = await bcrypt.compare(password, user.passwordHash);
     if (!isValid) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    const token = jwt.sign({ id: user.id, role: user.role }, JWT_SECRET, { expiresIn: '1d' });
+    const token = jwt.sign({ id: user.id, role: user.role, isVerified: user.isVerified }, JWT_SECRET, { expiresIn: '1d' });
     
-    res.json({ token, user: { id: user.id, name: user.name, email: user.email, role: user.role } });
+    res.json({ token, user: { id: user.id, name: user.name, email: user.email, role: user.role, isVerified: user.isVerified } });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
@@ -157,6 +153,51 @@ app.get('/api/auth/verify', async (req, res) => {
   }
 });
 
+app.post('/api/auth/resend-verification', async (req, res) => {
+  try {
+    const { email } = req.body;
+    
+    if (!email) {
+      return res.status(400).json({ error: 'Email este necesar' });
+    }
+
+    const user = await prisma.user.findUnique({ where: { email } });
+    
+    // If user doesn't exist or is already verified, we still return a success message
+    // to prevent email enumeration (security best practice)
+    if (!user || user.isVerified) {
+      return res.json({ message: 'Dacă adresa există și nu este verificată, vei primi un email în curând.' });
+    }
+
+    const verifyToken = crypto.randomBytes(32).toString('hex');
+    
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { verifyToken }
+    });
+
+    const verifyLink = `https://contaudit.eu/verify?token=${verifyToken}`;
+    
+    await transporter.sendMail({
+      from: `"Contaudit" <${process.env.SMTP_USER}>`,
+      to: email,
+      subject: 'Verifică adresa de email - Contaudit',
+      html: `
+        <h3>Salut, ${user.name}!</h3>
+        <p>Ai solicitat retransmiterea linkului de activare pentru platforma Contaudit.</p>
+        <p>Pentru a activa contul, te rugăm să dai click pe linkul de mai jos:</p>
+        <a href="${verifyLink}" style="display:inline-block;padding:10px 20px;background-color:#1a2340;color:#ffffff;text-decoration:none;border-radius:5px;">Verifică Contul</a>
+        <p>Dacă nu ai solicitat crearea unui cont, poți ignora acest mesaj.</p>
+      `,
+    });
+
+    res.json({ message: 'Email de verificare retrimis cu succes!' });
+  } catch (error) {
+    console.error('Failed to resend verification email:', error);
+    res.status(500).json({ error: 'Eroare la trimiterea email-ului. Încearcă din nou mai târziu.' });
+  }
+});
+
 // --- MIDDLEWARES --- //
 
 const authenticate = (req: any, res: any, next: any) => {
@@ -179,6 +220,19 @@ const requireAdmin = (req: any, res: any, next: any) => {
   }
   next();
 };
+
+app.get('/api/auth/me', authenticate, async (req: any, res: any) => {
+  try {
+    const userId = req.user.id;
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) return res.status(404).json({ error: 'User not found' });
+    
+    res.json({ id: user.id, name: user.name, email: user.email, role: user.role, isVerified: user.isVerified });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 // --- CLIENT DASHBOARD --- //
 
