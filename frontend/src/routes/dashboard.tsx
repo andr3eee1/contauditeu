@@ -202,7 +202,7 @@ function Dashboard() {
             <p className="text-sm font-medium text-gold mb-4 bg-gold/10 p-2 rounded-lg">{resendMsg}</p>
           )}
 
-          <button onClick={logout} className="text-sm text-muted-foreground hover:text-foreground underline">
+          <button onClick={logout} className="text-sm text-muted-foreground hover:text-foreground underline cursor-pointer">
             Delogare
           </button>
         </div>
