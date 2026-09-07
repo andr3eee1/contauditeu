@@ -96,7 +96,6 @@ function Login() {
             <div className="space-y-2">
               <div className="flex justify-between items-center ml-1">
                 <label className="text-sm font-medium text-foreground">Parolă</label>
-                <a href="#" className="text-xs text-primary hover:text-gold transition-colors">Ați uitat parola?</a>
               </div>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-muted-foreground">
