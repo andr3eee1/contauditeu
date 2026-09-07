@@ -7,9 +7,21 @@ import multer from 'multer';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import nodemailer from 'nodemailer';
+import crypto from 'crypto';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST,
+  port: parseInt(process.env.SMTP_PORT || '587'),
+  secure: false, // true for 465, false for other ports
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
+});
 
 const UPLOADS_DIR = path.join(__dirname, '../uploads');
 if (!fs.existsSync(UPLOADS_DIR)) {
@@ -52,15 +64,40 @@ app.post('/api/auth/register', async (req, res) => {
     const role = totalUsers === 0 ? 'ADMIN' : 'CLIENT';
 
     const passwordHash = await bcrypt.hash(password, 10);
+    const verifyToken = crypto.randomBytes(32).toString('hex');
+    const isVerified = role === 'ADMIN'; // Auto-verify the first admin user
 
     const user = await prisma.user.create({
       data: {
         name,
         email,
         passwordHash,
-        role
+        role,
+        verifyToken,
+        isVerified
       }
     });
+
+    if (!isVerified) {
+      const verifyLink = `https://contaudit.eu/verify?token=${verifyToken}`;
+      try {
+        await transporter.sendMail({
+          from: `"Contaudit" <${process.env.SMTP_USER}>`,
+          to: email,
+          subject: 'Verifică adresa de email - Contaudit',
+          html: `
+            <h3>Salut, ${name}!</h3>
+            <p>Îți mulțumim pentru înregistrarea pe platforma Contaudit.</p>
+            <p>Pentru a activa contul, te rugăm să dai click pe linkul de mai jos:</p>
+            <a href="${verifyLink}" style="display:inline-block;padding:10px 20px;background-color:#1a2340;color:#ffffff;text-decoration:none;border-radius:5px;">Verifică Contul</a>
+            <p>Dacă nu ai solicitat crearea unui cont, poți ignora acest mesaj.</p>
+          `,
+        });
+      } catch (mailError) {
+        console.error('Failed to send verification email:', mailError);
+        // Continue, don't fail registration, but maybe admin has to manually verify
+      }
+    }
 
     res.status(201).json({ message: 'User registered successfully', userId: user.id, role: user.role });
   } catch (error) {
@@ -78,6 +115,10 @@ app.post('/api/auth/login', async (req, res) => {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
+    if (!user.isVerified) {
+      return res.status(403).json({ error: 'Contul nu este activat. Te rugăm să îți verifici email-ul.' });
+    }
+
     const isValid = await bcrypt.compare(password, user.passwordHash);
     if (!isValid) {
       return res.status(401).json({ error: 'Invalid credentials' });
@@ -86,6 +127,30 @@ app.post('/api/auth/login', async (req, res) => {
     const token = jwt.sign({ id: user.id, role: user.role }, JWT_SECRET, { expiresIn: '1d' });
     
     res.json({ token, user: { id: user.id, name: user.name, email: user.email, role: user.role } });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.get('/api/auth/verify', async (req, res) => {
+  try {
+    const { token } = req.query;
+    if (!token || typeof token !== 'string') {
+      return res.status(400).json({ error: 'Token invalid' });
+    }
+
+    const user = await prisma.user.findFirst({ where: { verifyToken: token } });
+    if (!user) {
+      return res.status(400).json({ error: 'Token invalid sau expirat' });
+    }
+
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { isVerified: true, verifyToken: null }
+    });
+
+    res.json({ message: 'Email verificat cu succes' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
