@@ -24,11 +24,12 @@ export const getEmailTemplate = (title: string, preheader: string, content: stri
       box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
     }
     .header {
-      padding: 40px 40px 20px 40px;
+      background-color: #1a2340;
+      padding: 40px 40px 30px 40px;
       text-align: center;
     }
     .logo {
-      color: #1a2340;
+      color: #ffffff;
       font-size: 32px;
       font-weight: 600;
       letter-spacing: -1px;
@@ -36,10 +37,10 @@ export const getEmailTemplate = (title: string, preheader: string, content: stri
       text-decoration: none;
     }
     .logo span {
-      color: #64748b;
-      font-size: 16px;
+      color: #d4af37;
+      font-size: 32px;
       font-weight: 600;
-      letter-spacing: normal;
+      letter-spacing: -1px;
     }
     .content {
       padding: 20px 40px 40px 40px;
