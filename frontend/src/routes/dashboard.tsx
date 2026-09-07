@@ -192,7 +192,7 @@ function Dashboard() {
           <button 
             onClick={handleResend} 
             disabled={resending}
-            className="w-full mb-4 inline-flex items-center justify-center gap-2 rounded-full bg-navy px-4 py-3 text-sm font-medium text-white hover:bg-navy/90 disabled:opacity-50 transition-all"
+            className="w-full h-12 mb-4 rounded-full bg-navy text-navy-foreground font-medium hover:bg-navy/90 hover:shadow-[0_8px_20px_rgba(26,35,64,0.25)] transition-all hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
           >
             {resending ? <Loader2 className="animate-spin" size={18} /> : null}
             Retrimite Email de Verificare
