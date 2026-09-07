@@ -24,7 +24,7 @@ export const getEmailTemplate = (title: string, preheader: string, content: stri
       box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
     }
     .header {
-      background-color: #1a2340;
+      background-color: #1a2238;
       padding: 40px 40px 30px 40px;
       text-align: center;
     }
@@ -37,7 +37,7 @@ export const getEmailTemplate = (title: string, preheader: string, content: stri
       text-decoration: none;
     }
     .logo span {
-      color: #d4af37;
+      color: #d1a93e;
       font-size: 32px;
       font-weight: 600;
       letter-spacing: -1px;
@@ -67,14 +67,14 @@ export const getEmailTemplate = (title: string, preheader: string, content: stri
     }
     .button {
       display: inline-block;
-      background-color: #1a2340;
+      background-color: #1a2238;
       color: #ffffff !important;
       font-weight: 500;
       font-size: 15px;
       text-decoration: none;
       padding: 16px 36px;
       border-radius: 50px;
-      box-shadow: 0 8px 20px rgba(26, 35, 64, 0.25);
+      box-shadow: 0 8px 20px rgba(26, 34, 56, 0.25);
     }
     .footer {
       padding: 32px 40px;
