@@ -4,6 +4,8 @@ export const getEmailTemplate = (title: string, preheader: string, content: stri
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <meta name="supported-color-schemes" content="light dark">
   <title>${title}</title>
   <style>
     body {
@@ -24,7 +26,7 @@ export const getEmailTemplate = (title: string, preheader: string, content: stri
       box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
     }
     .header {
-      background-color: #1a2238;
+      background-color: #0e1f39;
       padding: 40px 40px 30px 40px;
       text-align: center;
     }
@@ -37,7 +39,7 @@ export const getEmailTemplate = (title: string, preheader: string, content: stri
       text-decoration: none;
     }
     .logo span {
-      color: #d1a93e;
+      color: #d5aa55;
       font-size: 32px;
       font-weight: 600;
       letter-spacing: -1px;
@@ -67,14 +69,14 @@ export const getEmailTemplate = (title: string, preheader: string, content: stri
     }
     .button {
       display: inline-block;
-      background-color: #1a2238;
+      background-color: #0e1f39;
       color: #ffffff !important;
       font-weight: 500;
       font-size: 15px;
       text-decoration: none;
       padding: 16px 36px;
       border-radius: 50px;
-      box-shadow: 0 8px 20px rgba(26, 34, 56, 0.25);
+      box-shadow: 0 8px 20px rgba(14, 31, 57, 0.25);
     }
     .footer {
       padding: 32px 40px;
@@ -86,6 +88,31 @@ export const getEmailTemplate = (title: string, preheader: string, content: stri
       margin: 0;
       font-size: 13px;
       color: #94a3b8;
+    }
+    
+    /* Dark Mode Support */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #0f1423 !important;
+      }
+      .container {
+        background-color: #1e2638 !important;
+        border-color: #334155 !important;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5) !important;
+      }
+      h1 {
+        color: #f8fafc !important;
+      }
+      p {
+        color: #cbd5e1 !important;
+      }
+      .footer {
+        background-color: #0f1423 !important;
+        border-color: #1e2638 !important;
+      }
+      .footer p {
+        color: #64748b !important;
+      }
     }
   </style>
 </head>
