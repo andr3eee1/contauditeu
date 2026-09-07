@@ -159,7 +159,7 @@ function Home() {
       {/* Hero */}
       <section className="relative bg-navy text-navy-foreground overflow-hidden pt-16 md:pt-24 pb-20 md:pb-32">
         <div className="absolute inset-0 opacity-25">
-          <img src="/hero-office.jpg" alt="Firmă de contabilitate și audit financiar - Birou profesional" fetchPriority="high" width="1920" height="1080" className="w-full h-full object-cover" />
+          <img src="/hero-office.webp" alt="Firmă de contabilitate și audit financiar - Birou profesional" fetchPriority="high" width="1920" height="1080" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-navy/60 mix-blend-multiply"></div>
         </div>
         
@@ -358,7 +358,7 @@ function Home() {
             
             <div className="relative">
               <div className="aspect-[4/5] rounded-3xl overflow-hidden shadow-xl relative z-10 border border-border/50">
-                <img src="/founder.jpeg" loading="lazy" width="800" height="1000" alt="Octavia Savu, Expert Contabil și Auditor Financiar" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+                <img src="/founder.webp" loading="lazy" width="800" height="1000" alt="Octavia Savu, Expert Contabil și Auditor Financiar" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
               </div>
               <div className="absolute -bottom-6 -left-6 bg-surface/90 backdrop-blur-md p-6 rounded-2xl shadow-soft border border-border/60 z-20">
                 <p className="font-display text-2xl text-foreground">Octavia Savu</p>
