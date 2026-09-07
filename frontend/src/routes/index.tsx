@@ -26,7 +26,10 @@ export const Route = createFileRoute('/')({
       { property: 'og:url', content: 'https://contaudit.eu/' },
       { property: 'og:type', content: 'website' },
     ],
-    links: [{ rel: 'canonical', href: 'https://contaudit.eu/' }],
+    links: [
+      { rel: 'canonical', href: 'https://contaudit.eu/' },
+      { rel: 'preload', as: 'image', href: '/hero-office.webp', fetchPriority: 'high' }
+    ],
     scripts: [
       {
         type: 'application/ld+json',
