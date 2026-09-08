@@ -68,7 +68,7 @@ function PrivacyPolicy() {
               <li>Dreptul la rectificare și ștergerea datelor ("dreptul de a fi uitat").</li>
               <li>Dreptul la restricționarea prelucrării și portabilitatea datelor.</li>
             </ul>
-            <p className="mt-2">Pentru orice întrebări suplimentare referitoare la modul în care datele cu caracter personal sunt prelucrate, vă rugăm să vă adresați la adresa de email: <strong>contact@contaudit.eu</strong></p>
+            <p className="mt-2">Pentru orice întrebări suplimentare referitoare la modul în care datele cu caracter personal sunt prelucrate, vă rugăm să vă adresați la adresa de email: <strong>office@contaudit.eu</strong></p>
           </section>
         </div>
       </main>

@@ -47,7 +47,7 @@ export const Route = createFileRoute('/')({
             "postalCode": "020943",
             "addressCountry": "RO"
           },
-          "email": "contact@contaudit.eu",
+          "email": "office@contaudit.eu",
           "priceRange": "$$",
           "founder": {
             "@type": "Person",
@@ -463,7 +463,7 @@ function Home() {
               <div className="space-y-6">
                 <div>
                   <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-2">Email</p>
-                  <a href="mailto:contact@contaudit.eu" className="text-xl font-medium text-primary hover:text-gold transition-colors">contact@contaudit.eu</a>
+                  <a href="mailto:office@contaudit.eu" className="text-xl font-medium text-primary hover:text-gold transition-colors">office@contaudit.eu</a>
                 </div>
                 <div>
                   <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-2">Adresă</p>

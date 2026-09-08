@@ -456,7 +456,7 @@ app.post('/api/contact', async (req: any, res: any) => {
     try {
       await transporter.sendMail({
         from: `"Contaudit Website" <${process.env.SMTP_USER}>`,
-        to: 'contact@contaudit.eu', // or office@contaudit.eu, whatever they use
+        to: 'office@contaudit.eu', // or office@contaudit.eu, whatever they use
         replyTo: email,
         subject: `Mesaj nou de contact: ${name}`,
         text: `Ai primit un mesaj nou de la: ${name} (${email})\n\nMesaj:\n${message}`,
