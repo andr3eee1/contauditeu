@@ -452,6 +452,27 @@ app.post('/api/contact', async (req: any, res: any) => {
       data: { name, email, message }
     });
     
+    // Send email to admin
+    try {
+      await transporter.sendMail({
+        from: `"Contaudit Website" <${process.env.SMTP_USER}>`,
+        to: 'contact@contaudit.eu', // or office@contaudit.eu, whatever they use
+        replyTo: email,
+        subject: `Mesaj nou de contact: ${name}`,
+        text: `Ai primit un mesaj nou de la: ${name} (${email})\n\nMesaj:\n${message}`,
+        html: `
+          <h2>Mesaj nou de contact</h2>
+          <p><strong>Nume:</strong> ${name}</p>
+          <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+          <hr/>
+          <p><strong>Mesaj:</strong></p>
+          <p style="white-space: pre-wrap;">${message}</p>
+        `
+      });
+    } catch (mailError) {
+      console.error('Failed to send contact email to admin:', mailError);
+    }
+    
     res.status(201).json({ success: true, message: 'Message sent' });
   } catch (error) {
     console.error(error);
