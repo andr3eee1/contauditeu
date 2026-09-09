@@ -432,17 +432,23 @@ function Home() {
               Ne mândrim cu faptul că am prestat servicii și am construit parteneriate solide în diverse arii comerciale pentru companii de top.
             </p>
           </div>
-          
-          <div className="flex flex-wrap justify-center gap-4">
-            {[
-              "Delta Studio", "Gebruder Weiss", "Medicover", "Synevo Romania", 
-              "Sud Oil", "Meta Management Team", "Exe Software", "Biofarm SA", 
-              "West Gate", "Novo Parc Trei", "Creditreform Romania", "IFN Imprumut SA", "Terramob Art Design"
-            ].map((client, i) => (
-              <div key={i} className="bg-background px-6 py-4 rounded-full shadow-soft border border-border/60 hover:-translate-y-1 transition-all duration-300 hover:border-gold/50 hover:shadow-md font-medium text-foreground text-sm cursor-default">
-                {client}
-              </div>
-            ))}
+          <div className="relative w-full overflow-hidden mt-12 py-10 before:absolute before:left-0 before:top-0 before:z-10 before:h-full before:w-[150px] before:bg-gradient-to-r before:from-surface before:to-transparent after:absolute after:right-0 after:top-0 after:z-10 after:h-full after:w-[150px] after:bg-gradient-to-l after:from-surface after:to-transparent">
+            <div className="flex w-max animate-[marquee_40s_linear_infinite] hover:[animation-play-state:paused]">
+              {[
+                "Delta Studio", "Gebruder Weiss", "Medicover", "Synevo Romania", 
+                "Sud Oil", "Meta Management Team", "Exe Software", "Biofarm SA", 
+                "West Gate", "Novo Parc Trei", "Creditreform Romania", "IFN Imprumut SA", "Terramob Art Design",
+                "Delta Studio", "Gebruder Weiss", "Medicover", "Synevo Romania", 
+                "Sud Oil", "Meta Management Team", "Exe Software", "Biofarm SA", 
+                "West Gate", "Novo Parc Trei", "Creditreform Romania", "IFN Imprumut SA", "Terramob Art Design"
+              ].map((client, i) => (
+                <div key={i} className="mx-6 flex items-center justify-center bg-background px-8 py-6 rounded-2xl shadow-sm border border-border/40 hover:-translate-y-1 transition-all duration-300 hover:border-gold/50 hover:shadow-md cursor-default min-w-[200px] group">
+                  <span className="font-display text-xl font-medium text-foreground/70 group-hover:text-foreground transition-colors text-center w-full">
+                    {client}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
