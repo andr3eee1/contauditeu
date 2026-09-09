@@ -138,6 +138,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
         <style dangerouslySetInnerHTML={{ __html: appCss }} />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <script defer src="https://analytics.contaudit.eu/script.js" data-website-id="91bffa32-7a55-4ec4-a2f5-96440ebadb83"></script>
       </head>
       <body>
         <AuthProvider>
