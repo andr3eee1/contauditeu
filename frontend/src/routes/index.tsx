@@ -435,19 +435,52 @@ function Home() {
           <div className="relative w-full overflow-hidden mt-12 py-10 before:absolute before:left-0 before:top-0 before:z-10 before:h-full before:w-[150px] before:bg-gradient-to-r before:from-surface before:to-transparent after:absolute after:right-0 after:top-0 after:z-10 after:h-full after:w-[150px] after:bg-gradient-to-l after:from-surface after:to-transparent">
             <div className="flex w-max animate-[marquee_40s_linear_infinite] hover:[animation-play-state:paused]">
               {[
-                "Delta Studio", "Gebruder Weiss", "Medicover", "Synevo Romania", 
-                "Sud Oil", "Meta Management Team", "Exe Software", "Biofarm SA", 
-                "West Gate", "Novo Parc Trei", "Creditreform Romania", "IFN Imprumut SA", "Terramob Art Design",
-                "Delta Studio", "Gebruder Weiss", "Medicover", "Synevo Romania", 
-                "Sud Oil", "Meta Management Team", "Exe Software", "Biofarm SA", 
-                "West Gate", "Novo Parc Trei", "Creditreform Romania", "IFN Imprumut SA", "Terramob Art Design"
-              ].map((client, i) => (
-                <div key={i} className="mx-6 flex items-center justify-center bg-background px-8 py-6 rounded-2xl shadow-sm border border-border/40 hover:-translate-y-1 transition-all duration-300 hover:border-gold/50 hover:shadow-md cursor-default min-w-[200px] group">
-                  <span className="font-display text-xl font-medium text-foreground/70 group-hover:text-foreground transition-colors text-center w-full">
-                    {client}
-                  </span>
-                </div>
-              ))}
+                { name: "Delta Studio", logo: "/logos/Logo-Delta-Studio.png" },
+                { name: "Gebruder Weiss", logo: "/logos/gebruder-weiss.png" },
+                { name: "Medicover", logo: "/logos/Logo-medicover.png" },
+                { name: "Synevo Romania", logo: "/logos/logo-synevo.webp" },
+                { name: "Sud Oil", logo: "/logos/S-OIL_Logo.svg.png" },
+                { name: "Meta Management Team", logo: null },
+                { name: "Exe Software", logo: "/logos/exe-software.png" },
+                { name: "Biofarm SA", logo: "/logos/biofarm-sa.png" },
+                { name: "West Gate", logo: null },
+                { name: "Novo Parc Trei", logo: null },
+                { name: "Creditreform Romania", logo: "/logos/credit-reform.png" },
+                { name: "IFN Imprumut SA", logo: "/logos/ifn-imprumut.png" },
+                { name: "Terramob Art Design", logo: "/logos/terramob.png" },
+                { name: "Delta Studio", logo: "/logos/Logo-Delta-Studio.png" },
+                { name: "Gebruder Weiss", logo: "/logos/gebruder-weiss.png" },
+                { name: "Medicover", logo: "/logos/Logo-medicover.png" },
+                { name: "Synevo Romania", logo: "/logos/logo-synevo.webp" },
+                { name: "Sud Oil", logo: "/logos/S-OIL_Logo.svg.png" },
+                { name: "Meta Management Team", logo: null },
+                { name: "Exe Software", logo: "/logos/exe-software.png" },
+                { name: "Biofarm SA", logo: "/logos/biofarm-sa.png" },
+                { name: "West Gate", logo: null },
+                { name: "Novo Parc Trei", logo: null },
+                { name: "Creditreform Romania", logo: "/logos/credit-reform.png" },
+                { name: "IFN Imprumut SA", logo: "/logos/ifn-imprumut.png" },
+                { name: "Terramob Art Design", logo: "/logos/terramob.png" }
+              ].map((client, i) => {
+                const isTerramob = client.name === "Terramob Art Design";
+                const isIFN = client.name === "IFN Imprumut SA";
+                
+                return (
+                  <div key={i} className={`mx-4 flex items-center justify-center px-6 py-4 rounded-2xl shadow-sm border border-border/40 hover:-translate-y-1 transition-all duration-300 hover:border-gold/50 hover:shadow-md cursor-default min-w-[200px] h-[100px] group ${isTerramob ? "bg-slate-800" : "bg-background"}`}>
+                    {client.logo ? (
+                      <img 
+                        src={client.logo} 
+                        alt={client.name} 
+                        className={`max-w-full max-h-[60px] object-contain opacity-70 group-hover:opacity-100 transition-all duration-300 grayscale group-hover:grayscale-0 ${isIFN ? "scale-[2.5]" : ""}`} 
+                      />
+                    ) : (
+                      <span className={`font-display text-xl font-medium group-hover:text-foreground transition-colors text-center w-full ${isTerramob ? "text-white" : "text-foreground/70"}`}>
+                        {client.name}
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
