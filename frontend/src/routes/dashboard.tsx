@@ -11,7 +11,14 @@ export const Route = createFileRoute('/dashboard')({
 function Dashboard() {
   const navigate = useNavigate()
   const { user, isAuthenticated, logout, updateUser } = useAuth()
-  const [activeTab, setActiveTab] = useState<'overview' | 'clients' | 'documents' | 'cloud'>('overview')
+  
+  const [activeTab, setActiveTab] = useState<'overview' | 'clients' | 'documents' | 'cloud'>(() => {
+    return (localStorage.getItem('contaudit_dashboard_tab') as any) || 'overview'
+  })
+
+  useEffect(() => {
+    localStorage.setItem('contaudit_dashboard_tab', activeTab)
+  }, [activeTab])
   
   // Data states
   const [clients, setClients] = useState<any[]>([])
