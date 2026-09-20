@@ -348,54 +348,6 @@ function Dashboard() {
                 </div>
               </div>
 
-              {/* Upload Modal */}
-              {uploadModalOpen && selectedClientForUpload && (
-                <div className="fixed inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200">
-                  <div className="bg-surface border border-border/60 rounded-3xl p-8 w-full max-w-md shadow-2xl relative">
-                    <button 
-                      onClick={() => { setUploadModalOpen(false); setFile(null); }}
-                      className="absolute top-6 right-6 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-                    >
-                      <XCircle size={24} />
-                    </button>
-                    
-                    <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-6">
-                      <UploadCloud size={24} />
-                    </div>
-                    
-                    <h3 className="font-display text-2xl font-medium mb-2">Încărcare Document</h3>
-                    <p className="text-muted-foreground text-sm mb-6">
-                      Pentru clientul: <strong className="text-foreground">{selectedClientForUpload.name}</strong>
-                    </p>
-
-                    <form onSubmit={(e) => {
-                      e.preventDefault();
-                      handleUpload(selectedClientForUpload.id);
-                    }} className="space-y-6">
-                      <div>
-                        <label className="block text-sm font-medium text-muted-foreground mb-3 ml-1">Selectați Fișierul (PDF, Excel)</label>
-                        <input 
-                          ref={fileInputRef}
-                          type="file" 
-                          required
-                          onChange={(e) => setFile(e.target.files?.[0] || null)}
-                          className="w-full text-sm text-muted-foreground file:mr-4 file:py-3 file:px-6 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 transition-colors bg-background border border-border/50 rounded-xl p-2"
-                        />
-                      </div>
-
-                      <button 
-                        type="submit" 
-                        disabled={uploading}
-                        className="w-full h-12 rounded-xl bg-navy text-navy-foreground font-medium hover:bg-navy/90 hover:shadow-[0_8px_20px_rgba(26,35,64,0.25)] transition-all hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
-                      >
-                        {uploading ? <Loader2 size={18} className="animate-spin" /> : <UploadCloud size={18} />}
-                        {uploading ? 'Se încarcă securizat...' : 'Confirmă Încărcarea'}
-                      </button>
-                    </form>
-                  </div>
-                </div>
-              )}
-
               {/* Client List */}
               <div className="bg-background border border-border/60 rounded-3xl overflow-hidden shadow-soft">
                 <table className="w-full text-left border-collapse">
@@ -568,6 +520,54 @@ function Dashboard() {
             </div>
           )}
         </div>
+        
+        {/* Upload Modal (Global) */}
+        {uploadModalOpen && selectedClientForUpload && (
+          <div className="fixed inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-in fade-in duration-200">
+            <div className="bg-surface border border-border/60 rounded-3xl p-8 w-full max-w-md shadow-2xl relative">
+              <button 
+                onClick={() => { setUploadModalOpen(false); setFile(null); }}
+                className="absolute top-6 right-6 text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+              >
+                <XCircle size={24} />
+              </button>
+              
+              <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-6">
+                <UploadCloud size={24} />
+              </div>
+              
+              <h3 className="font-display text-2xl font-medium mb-2">Încărcare Document</h3>
+              <p className="text-muted-foreground text-sm mb-6">
+                Pentru: <strong className="text-foreground">{selectedClientForUpload.name}</strong>
+              </p>
+
+              <form onSubmit={(e) => {
+                e.preventDefault();
+                handleUpload(selectedClientForUpload.id);
+              }} className="space-y-6">
+                <div>
+                  <label className="block text-sm font-medium text-muted-foreground mb-3 ml-1">Selectați Fișierul</label>
+                  <input 
+                    ref={fileInputRef}
+                    type="file" 
+                    required
+                    onChange={(e) => setFile(e.target.files?.[0] || null)}
+                    className="w-full text-sm text-muted-foreground file:mr-4 file:py-3 file:px-6 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 transition-colors bg-background border border-border/50 rounded-xl p-2"
+                  />
+                </div>
+
+                <button 
+                  type="submit" 
+                  disabled={uploading}
+                  className="w-full h-12 rounded-xl bg-navy text-navy-foreground font-medium hover:bg-navy/90 hover:shadow-[0_8px_20px_rgba(26,35,64,0.25)] transition-all hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  {uploading ? <Loader2 size={18} className="animate-spin" /> : <UploadCloud size={18} />}
+                  {uploading ? 'Se încarcă securizat...' : 'Confirmă Încărcarea'}
+                </button>
+              </form>
+            </div>
+          </div>
+        )}
       </main>
     </div>
   )
