@@ -144,6 +144,8 @@ function Dashboard() {
       })
       
       if (res.ok) {
+        const newDoc = await res.json()
+        setDocuments(prev => [newDoc, ...prev])
         showToast('Document încărcat cu succes!', 'success')
         setFile(null)
         setUploadModalOpen(false)
