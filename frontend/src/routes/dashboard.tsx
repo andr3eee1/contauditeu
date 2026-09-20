@@ -417,7 +417,12 @@ function Dashboard() {
                 </button>
               </div>
 
-              {documents.length === 0 ? (
+              {loadingData ? (
+                <div className="bg-background border border-border/60 rounded-3xl overflow-hidden shadow-soft text-center py-16">
+                  <Loader2 className="animate-spin mx-auto text-primary mb-4" size={32} />
+                  <h3 className="text-xl font-medium mb-2 text-muted-foreground">Se încarcă documentele...</h3>
+                </div>
+              ) : documents.length === 0 ? (
                 <div className="bg-background border border-border/60 rounded-3xl overflow-hidden shadow-soft text-center py-16">
                   <div className="w-20 h-20 bg-muted/30 rounded-full mx-auto flex items-center justify-center text-muted-foreground mb-4">
                     <Cloud size={32} />
