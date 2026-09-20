@@ -13,7 +13,10 @@ function Dashboard() {
   const { user, isAuthenticated, logout, updateUser } = useAuth()
   
   const [activeTab, setActiveTab] = useState<'overview' | 'clients' | 'documents' | 'cloud'>(() => {
-    return (localStorage.getItem('contaudit_dashboard_tab') as any) || 'overview'
+    if (typeof window !== 'undefined') {
+      return (localStorage.getItem('contaudit_dashboard_tab') as any) || 'overview'
+    }
+    return 'overview'
   })
 
   useEffect(() => {

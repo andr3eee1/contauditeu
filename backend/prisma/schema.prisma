@@ -17,10 +17,12 @@ model User {
   verifyToken   String?
   resetPasswordToken   String?
   resetPasswordExpires DateTime?
+  monthlyStatus String     @default("WAITING") // "WAITING", "PROCESSING", "DONE"
   createdAt     DateTime   @default(now())
   
   requests      Request[]
   documents     Document[]
+  activities    ActivityLog[]
 }
 
 model Request {
@@ -42,6 +44,16 @@ model Document {
   
   clientId     String
   client       User     @relation(fields: [clientId], references: [id])
+}
+
+model ActivityLog {
+  id          String   @id @default(uuid())
+  action      String   // e.g. "USER_LOGIN", "DOC_UPLOAD", "STATUS_CHANGE"
+  details     String   // e.g. "Clientul X a încărcat un document"
+  createdAt   DateTime @default(now())
+  
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
 }
 
 model ContactMessage {

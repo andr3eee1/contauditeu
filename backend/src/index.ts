@@ -123,6 +123,15 @@ app.post('/api/auth/login', async (req, res) => {
 
     const token = jwt.sign({ id: user.id, role: user.role, isVerified: user.isVerified }, JWT_SECRET, { expiresIn: '1d' });
     
+    // Log activity
+    await prisma.activityLog.create({
+      data: {
+        action: 'USER_LOGIN',
+        details: `S-a autentificat în platformă.`,
+        userId: user.id
+      }
+    });
+    
     res.json({ token, user: { id: user.id, name: user.name, email: user.email, role: user.role, isVerified: user.isVerified } });
   } catch (error) {
     console.error(error);
@@ -350,7 +359,7 @@ app.get('/api/admin/users', authenticate, requireAdmin, async (req: any, res: an
   try {
     const users = await prisma.user.findMany({
       where: { role: 'CLIENT' },
-      select: { id: true, name: true, email: true, createdAt: true }
+      select: { id: true, name: true, email: true, createdAt: true, monthlyStatus: true }
     });
     res.json(users);
   } catch (error) {
@@ -402,6 +411,15 @@ app.post('/api/admin/documents/:clientId', authenticate, requireAdmin, upload.si
     
     const doc = await prisma.document.create({
       data: { title, fileUrl, clientId }
+    });
+    
+    // Log activity
+    await prisma.activityLog.create({
+      data: {
+        action: 'DOC_UPLOAD',
+        details: clientId === req.user.id ? `A încărcat un fișier intern: ${title}` : `A încărcat un document pentru un client: ${title}`,
+        userId: req.user.id
+      }
     });
     
     res.status(201).json(doc);
@@ -474,6 +492,52 @@ app.post('/api/contact', async (req: any, res: any) => {
     }
     
     res.status(201).json({ success: true, message: 'Message sent' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// --- NEW FEATURES (PHASE 1) --- //
+
+app.get('/api/admin/activities', authenticate, requireAdmin, async (req: any, res: any) => {
+  try {
+    const activities = await prisma.activityLog.findMany({
+      orderBy: { createdAt: 'desc' },
+      take: 50,
+      include: { user: { select: { name: true, email: true } } }
+    });
+    res.json(activities);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.put('/api/admin/users/:id/status', authenticate, requireAdmin, async (req: any, res: any) => {
+  try {
+    const { id } = req.params;
+    const { monthlyStatus } = req.body;
+    
+    if (!['WAITING', 'PROCESSING', 'DONE'].includes(monthlyStatus)) {
+      return res.status(400).json({ error: 'Status invalid' });
+    }
+    
+    const updatedUser = await prisma.user.update({
+      where: { id },
+      data: { monthlyStatus }
+    });
+    
+    // Log this activity
+    await prisma.activityLog.create({
+      data: {
+        action: 'STATUS_CHANGE',
+        details: `A schimbat statusul pentru ${updatedUser.name} în ${monthlyStatus}`,
+        userId: req.user.id
+      }
+    });
+    
+    res.json(updatedUser);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
