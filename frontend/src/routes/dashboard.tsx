@@ -1,7 +1,7 @@
 
 import { useEffect, useState, useRef } from 'react'
 import { createFileRoute, useNavigate, Link } from '@tanstack/react-router'
-import { LogOut, LayoutDashboard, FileText, User, Loader2, Users, UploadCloud, Download, CheckCircle, XCircle, Cloud } from 'lucide-react'
+import { LogOut, LayoutDashboard, FileText, User, Loader2, Users, UploadCloud, Download, CheckCircle, XCircle, Cloud, Activity, Clock, AlertCircle, Mail } from 'lucide-react'
 import { useAuth } from '../auth'
 
 export const Route = createFileRoute('/dashboard')({
@@ -26,6 +26,7 @@ function Dashboard() {
   // Data states
   const [clients, setClients] = useState<any[]>([])
   const [documents, setDocuments] = useState<any[]>([])
+  const [activities, setActivities] = useState<any[]>([])
   const [loadingData, setLoadingData] = useState(false)
   
   // Upload states
@@ -82,6 +83,15 @@ function Dashboard() {
           if (myRes.ok) {
             const data = await myRes.json()
             setDocuments(data.documents || [])
+          }
+
+          // Fetch activities
+          const actRes = await fetch('/api/admin/activities', {
+            headers: { 'Authorization': `Bearer ${token}` }
+          })
+          if (actRes.ok) {
+            const data = await actRes.json()
+            setActivities(data)
           }
         } else {
           // Client fetching their own documents
@@ -169,6 +179,22 @@ function Dashboard() {
     } finally {
       setUploading(false)
     }
+  }
+
+  const updateClientStatus = async (clientId: string, status: string) => {
+    try {
+      const res = await fetch(`/api/admin/users/${clientId}/status`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('contaudit_token')}`
+        },
+        body: JSON.stringify({ monthlyStatus: status })
+      })
+      if (res.ok) {
+        setClients(clients.map(c => c.id === clientId ? { ...c, monthlyStatus: status } : c))
+      }
+    } catch (e) {}
   }
 
   const [resending, setResending] = useState(false)
@@ -317,9 +343,9 @@ function Dashboard() {
                 Bine ați venit în portalul dumneavoastră securizat.
               </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {user.role === 'ADMIN' ? (
-                  <>
+              {user.role === 'ADMIN' ? (
+                <>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
                     <div className="bg-card border border-border/60 rounded-3xl p-6 shadow-soft cursor-pointer hover:border-gold/30 transition-all" onClick={() => setActiveTab('clients')}>
                       <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-4">
                         <Users size={24} />
@@ -335,19 +361,124 @@ function Dashboard() {
                       <h3 className="font-medium text-lg mb-1">{documents.length} Fișiere Interne</h3>
                       <p className="text-sm text-muted-foreground">Spațiul tău personal de stocare securizat.</p>
                     </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="bg-card border border-border/60 rounded-3xl p-6 shadow-soft cursor-pointer hover:border-gold/30 transition-all" onClick={() => setActiveTab('documents')}>
+                    
+                    <div className="bg-card border border-border/60 rounded-3xl p-6 shadow-soft">
                       <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-4">
-                        <FileText size={24} />
+                        <AlertCircle size={24} />
                       </div>
-                      <h3 className="font-medium text-lg mb-1">{documents.length} Documente</h3>
-                      <p className="text-sm text-muted-foreground">Raportări și documente financiare.</p>
+                      <h3 className="font-medium text-lg mb-1">{clients.filter(c => !c.isVerified).length} Conturi Noi</h3>
+                      <p className="text-sm text-muted-foreground">Clienți care nu și-au confirmat emailul.</p>
                     </div>
-                  </>
-                )}
-              </div>
+                  </div>
+
+                  {/* Activity Timeline */}
+                  <h3 className="font-display text-xl font-medium mb-6 flex items-center gap-2"><Activity size={20} className="text-primary"/> Activitate Recentă</h3>
+                  <div className="bg-background border border-border/60 rounded-3xl p-6 shadow-soft">
+                    {activities.length === 0 ? (
+                      <p className="text-muted-foreground text-center py-4">Nicio activitate înregistrată încă.</p>
+                    ) : (
+                      <div className="space-y-6">
+                        {activities.slice(0, 5).map((act: any) => (
+                          <div key={act.id} className="flex gap-4">
+                            <div className="mt-1 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                              <Clock size={14} />
+                            </div>
+                            <div>
+                              <p className="text-foreground text-sm font-medium">{act.user?.name || 'Sistem'}</p>
+                              <p className="text-muted-foreground text-sm">{act.details}</p>
+                              <p className="text-xs text-muted-foreground/70 mt-1">{new Date(act.createdAt).toLocaleString('ro-RO')}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </>
+              ) : (
+                <>
+                  {/* CLIENT OVERVIEW */}
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
+                    <div className="lg:col-span-2 space-y-6">
+                      {/* Status Semafor */}
+                      <div className="bg-card border border-border/60 rounded-3xl p-6 shadow-soft relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-6 opacity-10">
+                          <CheckCircle size={100} />
+                        </div>
+                        <h3 className="font-medium text-lg mb-4 text-muted-foreground">Statusul Lunii Curente</h3>
+                        <div className="flex items-center gap-4">
+                          {user.monthlyStatus === 'WAITING' && (
+                            <div className="flex items-center gap-3">
+                              <div className="w-4 h-4 rounded-full bg-amber-400 animate-pulse"></div>
+                              <p className="text-xl font-medium text-amber-500">Așteptăm Documentele</p>
+                            </div>
+                          )}
+                          {user.monthlyStatus === 'PROCESSING' && (
+                            <div className="flex items-center gap-3">
+                              <div className="w-4 h-4 rounded-full bg-blue-400 animate-pulse"></div>
+                              <p className="text-xl font-medium text-blue-500">În procesare</p>
+                            </div>
+                          )}
+                          {(user.monthlyStatus === 'DONE' || !user.monthlyStatus) && (
+                            <div className="flex items-center gap-3">
+                              <div className="w-4 h-4 rounded-full bg-green-500 shadow-[0_0_15px_rgba(34,197,94,0.5)]"></div>
+                              <p className="text-xl font-medium text-green-500">La zi / Finalizat</p>
+                            </div>
+                          )}
+                        </div>
+                        <p className="text-sm text-muted-foreground mt-4 max-w-md">
+                          {user.monthlyStatus === 'WAITING' && 'Te rugăm să ne trimiți documentele și facturile aferente lunii trecute pentru a putea începe lucrul.'}
+                          {user.monthlyStatus === 'PROCESSING' && 'Am primit documentele tale. Echipa noastră lucrează la prelucrarea lor și întocmirea balanței.'}
+                          {(user.monthlyStatus === 'DONE' || !user.monthlyStatus) && 'Totul este perfect! Nu ai nicio sarcină în așteptare pentru luna aceasta.'}
+                        </p>
+                      </div>
+
+                      {/* Recent Documents */}
+                      <div className="bg-background border border-border/60 rounded-3xl p-6 shadow-soft">
+                        <div className="flex justify-between items-center mb-6">
+                          <h3 className="font-medium text-lg flex items-center gap-2"><FileText size={18} className="text-primary"/> Ultimele Documente</h3>
+                          <button onClick={() => setActiveTab('documents')} className="text-sm text-primary hover:underline cursor-pointer">Vezi toate</button>
+                        </div>
+                        {documents.length === 0 ? (
+                          <p className="text-muted-foreground text-sm">Nu ai primit niciun document încă.</p>
+                        ) : (
+                          <div className="space-y-3">
+                            {documents.slice(0, 3).map((doc: any) => (
+                              <div key={doc.id} className="flex items-center justify-between p-3 rounded-2xl bg-surface hover:bg-surface/80 transition-colors border border-border/40">
+                                <div className="flex items-center gap-3">
+                                  <div className="w-10 h-10 rounded-xl bg-gold/10 text-gold flex items-center justify-center shrink-0">
+                                    <FileText size={18} />
+                                  </div>
+                                  <div>
+                                    <p className="text-sm font-medium line-clamp-1">{doc.title}</p>
+                                    <p className="text-xs text-muted-foreground">{new Date(doc.createdAt).toLocaleDateString('ro-RO')}</p>
+                                  </div>
+                                </div>
+                                <button onClick={() => handleDownload(doc.id, doc.title)} className="p-2 text-primary hover:bg-primary/10 rounded-lg transition-colors cursor-pointer" title="Descarcă">
+                                  <Download size={16} />
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="space-y-6">
+                      <div className="bg-navy rounded-3xl p-6 text-white shadow-soft relative overflow-hidden h-full">
+                        <div className="absolute -bottom-10 -right-10 opacity-10">
+                          <Mail size={120} />
+                        </div>
+                        <h3 className="font-display text-xl font-medium mb-2">Ai o întrebare urgentă?</h3>
+                        <p className="text-white/70 text-sm mb-6">Trimite-ne un mesaj direct din portal. Îți vom răspunde în cel mai scurt timp.</p>
+                        <a href="mailto:office@contaudit.eu" className="w-full inline-flex items-center justify-center gap-2 h-12 bg-white text-navy font-medium rounded-xl hover:bg-white/90 transition-colors">
+                          <Mail size={18} />
+                          Contactează-ne
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           )}
 
@@ -368,14 +499,15 @@ function Dashboard() {
                       <th className="p-4 font-medium">Nume Client</th>
                       <th className="p-4 font-medium">Email</th>
                       <th className="p-4 font-medium">Data Înregistrării</th>
+                      <th className="p-4 font-medium">Status Lună</th>
                       <th className="p-4 font-medium text-right">Acțiuni</th>
                     </tr>
                   </thead>
                   <tbody>
                     {loadingData ? (
-                      <tr><td colSpan={4} className="p-8 text-center text-muted-foreground"><Loader2 className="animate-spin mx-auto" /></td></tr>
+                      <tr><td colSpan={5} className="p-8 text-center text-muted-foreground"><Loader2 className="animate-spin mx-auto" /></td></tr>
                     ) : clients.filter(c => c.role !== 'ADMIN').length === 0 ? (
-                      <tr><td colSpan={4} className="p-8 text-center text-muted-foreground">Niciun client înregistrat.</td></tr>
+                      <tr><td colSpan={5} className="p-8 text-center text-muted-foreground">Niciun client înregistrat.</td></tr>
                     ) : (
                       clients.filter(c => c.role !== 'ADMIN').map((client) => (
                         <tr key={client.id} className="border-b border-border/50 hover:bg-surface/50 transition-colors">
@@ -387,6 +519,21 @@ function Dashboard() {
                           </td>
                           <td className="p-4 text-sm text-muted-foreground">{client.email}</td>
                           <td className="p-4 text-sm text-muted-foreground">{new Date(client.createdAt).toLocaleDateString('ro-RO')}</td>
+                          <td className="p-4">
+                            <select 
+                              value={client.monthlyStatus || 'WAITING'}
+                              onChange={(e) => updateClientStatus(client.id, e.target.value)}
+                              className={`text-xs font-medium px-3 py-1.5 rounded-full border-0 outline-none cursor-pointer ${
+                                client.monthlyStatus === 'WAITING' ? 'bg-amber-400/20 text-amber-600' :
+                                client.monthlyStatus === 'PROCESSING' ? 'bg-blue-400/20 text-blue-600' :
+                                'bg-green-500/20 text-green-600'
+                              }`}
+                            >
+                              <option value="WAITING">Așteptăm Documente</option>
+                              <option value="PROCESSING">În Procesare</option>
+                              <option value="DONE">La Zi</option>
+                            </select>
+                          </td>
                           <td className="p-4 text-right">
                             <button 
                               onClick={() => {
