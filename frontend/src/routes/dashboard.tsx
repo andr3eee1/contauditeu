@@ -1,7 +1,7 @@
 
 import { useEffect, useState, useRef } from 'react'
 import { createFileRoute, useNavigate, Link } from '@tanstack/react-router'
-import { LogOut, LayoutDashboard, FileText, User, Loader2, Users, UploadCloud, Download, CheckCircle, XCircle, Cloud, Activity, Clock, AlertCircle, Mail } from 'lucide-react'
+import { LogOut, LayoutDashboard, FileText, User, Loader2, Users, UploadCloud, Download, CheckCircle, XCircle, Cloud, Activity, Clock, AlertCircle, Mail, ListTodo } from 'lucide-react'
 import { useAuth } from '../auth'
 
 export const Route = createFileRoute('/dashboard')({
@@ -27,6 +27,7 @@ function Dashboard() {
   const [clients, setClients] = useState<any[]>([])
   const [documents, setDocuments] = useState<any[]>([])
   const [activities, setActivities] = useState<any[]>([])
+  const [requests, setRequests] = useState<any[]>([])
   const [loadingData, setLoadingData] = useState(false)
   
   // Upload states
@@ -92,6 +93,15 @@ function Dashboard() {
           if (actRes.ok) {
             const data = await actRes.json()
             setActivities(data)
+          }
+
+          // Fetch requests
+          const reqRes = await fetch('/api/admin/requests', {
+            headers: { 'Authorization': `Bearer ${token}` }
+          })
+          if (reqRes.ok) {
+            const data = await reqRes.json()
+            setRequests(data)
           }
         } else {
           // Client fetching their own documents
@@ -371,27 +381,59 @@ function Dashboard() {
                     </div>
                   </div>
 
-                  {/* Activity Timeline */}
-                  <h3 className="font-display text-xl font-medium mb-6 flex items-center gap-2"><Activity size={20} className="text-primary"/> Activitate Recentă</h3>
-                  <div className="bg-background border border-border/60 rounded-3xl p-6 shadow-soft">
-                    {activities.length === 0 ? (
-                      <p className="text-muted-foreground text-center py-4">Nicio activitate înregistrată încă.</p>
-                    ) : (
-                      <div className="space-y-6">
-                        {activities.slice(0, 5).map((act: any) => (
-                          <div key={act.id} className="flex gap-4">
-                            <div className="mt-1 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
-                              <Clock size={14} />
-                            </div>
-                            <div>
-                              <p className="text-foreground text-sm font-medium">{act.user?.name || 'Sistem'}</p>
-                              <p className="text-muted-foreground text-sm">{act.details}</p>
-                              <p className="text-xs text-muted-foreground/70 mt-1">{new Date(act.createdAt).toLocaleString('ro-RO')}</p>
-                            </div>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div>
+                      <h3 className="font-display text-xl font-medium mb-6 flex items-center gap-2"><Activity size={20} className="text-primary"/> Activitate Recentă</h3>
+                      <div className="bg-background border border-border/60 rounded-3xl p-6 shadow-soft h-[350px] overflow-y-auto">
+                        {activities.length === 0 ? (
+                          <p className="text-muted-foreground text-center py-4">Nicio activitate înregistrată încă.</p>
+                        ) : (
+                          <div className="space-y-6">
+                            {activities.slice(0, 10).map((act: any) => (
+                              <div key={act.id} className="flex gap-4">
+                                <div className="mt-1 w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                                  <Clock size={14} />
+                                </div>
+                                <div>
+                                  <p className="text-foreground text-sm font-medium">{act.user?.name || 'Sistem'}</p>
+                                  <p className="text-muted-foreground text-sm">{act.details}</p>
+                                  <p className="text-xs text-muted-foreground/70 mt-1">{new Date(act.createdAt).toLocaleString('ro-RO')}</p>
+                                </div>
+                              </div>
+                            ))}
                           </div>
-                        ))}
+                        )}
                       </div>
-                    )}
+                    </div>
+
+                    <div>
+                      <h3 className="font-display text-xl font-medium mb-6 flex items-center gap-2"><ListTodo size={20} className="text-primary"/> Cereri în Așteptare</h3>
+                      <div className="bg-background border border-border/60 rounded-3xl p-6 shadow-soft h-[350px] overflow-y-auto">
+                        {requests.filter(r => r.status === 'PENDING').length === 0 ? (
+                          <div className="flex flex-col items-center justify-center h-full text-center">
+                            <div className="w-16 h-16 bg-green-500/10 text-green-500 rounded-full flex items-center justify-center mb-4">
+                              <CheckCircle size={32} />
+                            </div>
+                            <p className="font-medium text-lg">Totul e la zi!</p>
+                            <p className="text-muted-foreground text-sm">Nu există nicio cerere în așteptare.</p>
+                          </div>
+                        ) : (
+                          <div className="space-y-4">
+                            {requests.filter(r => r.status === 'PENDING').map((req: any) => (
+                              <div key={req.id} className="p-4 rounded-2xl bg-amber-400/10 border border-amber-400/20">
+                                <div className="flex justify-between items-start mb-2">
+                                  <p className="font-medium text-foreground">{req.client?.name}</p>
+                                  <span className="text-[10px] font-bold uppercase tracking-wider bg-amber-400/20 text-amber-700 px-2 py-1 rounded-full">Pending</span>
+                                </div>
+                                <p className="text-sm font-medium">{req.title}</p>
+                                {req.description && <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{req.description}</p>}
+                                <p className="text-xs text-muted-foreground/70 mt-3">{new Date(req.createdAt).toLocaleString('ro-RO')}</p>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </>
               ) : (
