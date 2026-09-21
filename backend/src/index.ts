@@ -132,7 +132,7 @@ app.post('/api/auth/login', async (req, res) => {
       }
     });
     
-    res.json({ token, user: { id: user.id, name: user.name, email: user.email, role: user.role, isVerified: user.isVerified } });
+    res.json({ token, user: { id: user.id, name: user.name, email: user.email, role: user.role, isVerified: user.isVerified, monthlyStatus: user.monthlyStatus } });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
@@ -315,7 +315,7 @@ app.get('/api/auth/me', authenticate, async (req: any, res: any) => {
     const user = await prisma.user.findUnique({ where: { id: userId } });
     if (!user) return res.status(404).json({ error: 'User not found' });
     
-    res.json({ id: user.id, name: user.name, email: user.email, role: user.role, isVerified: user.isVerified });
+    res.json({ id: user.id, name: user.name, email: user.email, role: user.role, isVerified: user.isVerified, monthlyStatus: user.monthlyStatus });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
