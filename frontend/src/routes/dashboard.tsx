@@ -12,9 +12,10 @@ function Dashboard() {
   const navigate = useNavigate()
   const { user, isAuthenticated, logout, updateUser } = useAuth()
   
-  const [activeTab, setActiveTab] = useState<'overview' | 'clients' | 'documents' | 'cloud'>(() => {
+  const [activeTab, setActiveTab] = useState<'overview' | 'clients' | 'documents'>(() => {
     if (typeof window !== 'undefined') {
-      return (localStorage.getItem('contaudit_dashboard_tab') as any) || 'overview'
+      const tab = localStorage.getItem('contaudit_dashboard_tab') as any;
+      return (tab === 'cloud' ? 'overview' : tab) || 'overview'
     }
     return 'overview'
   })
@@ -77,14 +78,6 @@ function Dashboard() {
             setClients(data)
           }
 
-          // Fetch admin's personal cloud documents
-          const myRes = await fetch('/api/client/dashboard', {
-            headers: { 'Authorization': `Bearer ${token}` }
-          })
-          if (myRes.ok) {
-            const data = await myRes.json()
-            setDocuments(data.documents || [])
-          }
 
           // Fetch activities
           const actRes = await fetch('/api/admin/activities', {
@@ -298,10 +291,6 @@ function Dashboard() {
                 <Users size={18} />
                 Clienți și Documente
               </button>
-              <button onClick={() => setActiveTab('cloud')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-colors ${activeTab === 'cloud' ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:bg-muted/50'}`}>
-                <Cloud size={18} />
-                Cloud Personal
-              </button>
             </>
           ) : (
             <button onClick={() => setActiveTab('documents')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-colors ${activeTab === 'documents' ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:bg-muted/50'}`}>
@@ -355,21 +344,13 @@ function Dashboard() {
 
               {user.role === 'ADMIN' ? (
                 <>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
                     <div className="bg-card border border-border/60 rounded-3xl p-6 shadow-soft cursor-pointer hover:border-gold/30 transition-all" onClick={() => setActiveTab('clients')}>
                       <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-4">
                         <Users size={24} />
                       </div>
                       <h3 className="font-medium text-lg mb-1">{clients.length} Clienți</h3>
                       <p className="text-sm text-muted-foreground">Gestionează toți clienții înregistrați.</p>
-                    </div>
-                    
-                    <div className="bg-card border border-border/60 rounded-3xl p-6 shadow-soft cursor-pointer hover:border-gold/30 transition-all" onClick={() => setActiveTab('cloud')}>
-                      <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-4">
-                        <Cloud size={24} />
-                      </div>
-                      <h3 className="font-medium text-lg mb-1">{documents.length} Fișiere Interne</h3>
-                      <p className="text-sm text-muted-foreground">Spațiul tău personal de stocare securizat.</p>
                     </div>
                     
                     <div className="bg-card border border-border/60 rounded-3xl p-6 shadow-soft">
@@ -597,77 +578,7 @@ function Dashboard() {
             </div>
           )}
 
-          {activeTab === 'cloud' && user.role === 'ADMIN' && (
-            <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-              <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
-                <div>
-                  <h2 className="font-display text-3xl font-medium text-foreground">Cloud Personal</h2>
-                  <p className="text-muted-foreground mt-1">Gestionează documentele tale personale securizate.</p>
-                </div>
-                <button
-                  onClick={() => {
-                    setSelectedClientForUpload(user)
-                    setUploadModalOpen(true)
-                  }}
-                  className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-navy text-white rounded-xl hover:bg-navy/90 transition-colors cursor-pointer font-medium"
-                >
-                  <UploadCloud size={18} />
-                  Încărcare Document
-                </button>
-              </div>
 
-              {loadingData ? (
-                <div className="bg-background border border-border/60 rounded-3xl overflow-hidden shadow-soft text-center py-16">
-                  <Loader2 className="animate-spin mx-auto text-primary mb-4" size={32} />
-                  <h3 className="text-xl font-medium mb-2 text-muted-foreground">Se încarcă documentele...</h3>
-                </div>
-              ) : documents.length === 0 ? (
-                <div className="bg-background border border-border/60 rounded-3xl overflow-hidden shadow-soft text-center py-16">
-                  <div className="w-20 h-20 bg-muted/30 rounded-full mx-auto flex items-center justify-center text-muted-foreground mb-4">
-                    <Cloud size={32} />
-                  </div>
-                  <h3 className="text-xl font-medium mb-2">Nu există documente personale</h3>
-                  <p className="text-muted-foreground max-w-sm mx-auto">
-                    Aici poți stoca fișiere importante doar pentru tine.
-                  </p>
-                </div>
-              ) : (
-                <div className="bg-background border border-border/60 rounded-3xl overflow-hidden shadow-soft">
-                  <table className="w-full text-left border-collapse">
-                    <thead>
-                      <tr className="bg-surface/50 border-b border-border/50 text-sm text-muted-foreground">
-                        <th className="p-4 font-medium">Nume Document</th>
-                        <th className="p-4 font-medium">Data Încărcării</th>
-                        <th className="p-4 font-medium text-right">Acțiuni</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {documents.map((doc) => (
-                        <tr key={doc.id} className="border-b border-border/50 hover:bg-surface/50 transition-colors">
-                          <td className="p-4 font-medium text-foreground flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-xl bg-gold/10 text-gold flex items-center justify-center">
-                              <Cloud size={18} />
-                            </div>
-                            {doc.title}
-                          </td>
-                          <td className="p-4 text-sm text-muted-foreground">{new Date(doc.createdAt).toLocaleDateString('ro-RO')}</td>
-                          <td className="p-4 text-right">
-                            <button 
-                              onClick={() => handleDownload(doc.id, doc.title)}
-                              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-navy/5 text-navy hover:bg-navy/10 font-medium text-sm transition-colors cursor-pointer"
-                            >
-                              <Download size={16} />
-                              Descarcă
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
-            </div>
-          )}
 
           {activeTab === 'documents' && user.role !== 'ADMIN' && (
             <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
